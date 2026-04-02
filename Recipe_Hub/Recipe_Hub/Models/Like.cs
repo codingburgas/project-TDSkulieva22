@@ -2,8 +2,10 @@
 
 namespace Recipe_Hub.Models;
 
-public class Like : BaseEntity
+public class Like
 {
+    public int Id { get; set; }
+
     public string UserId { get; set; }
     public IdentityUser User { get; set; }
 
