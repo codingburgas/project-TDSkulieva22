@@ -2,9 +2,8 @@
 
 namespace Recipe_Hub.Models;
 
-public class Comment
+public class Comment : BaseEntity
 {
-    public int Id { get; set; }
     public string Content { get; set; }
 
     public string UserId { get; set; }

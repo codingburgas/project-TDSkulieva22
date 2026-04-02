@@ -11,10 +11,8 @@ namespace Recipe_Hub.Models
         Hard = 3
     }
 
-    public class Recipe
+    public class Recipe : BaseEntity
     {
-        public int Id { get; set; }
-
         [Required]
         public string Title { get; set; }
 
