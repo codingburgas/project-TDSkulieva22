@@ -14,7 +14,14 @@
         <li>@ri.Ingredient.Name</li>
     }
 </ul>
-
+<h3>Steps</h3>
+<ol>
+    @foreach (var step in Model.Steps.OrderBy(s => s.StepNumber))
+    {
+        
+        <ol><strong>Step @step.StepNumber:</strong> @step.Description</ol>
+    }
+</ol>
 <h3>Likes: @Model.Likes.Count</h3>
 
 <a href="/Recipes/Index">Back to list</a>
