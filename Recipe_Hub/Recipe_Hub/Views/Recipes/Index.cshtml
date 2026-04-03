@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Recipe_Hub.Models.Recipe>
+
+<h2>All Recipes</h2>
+
+<table class="table">
+    <thead>
+    <tr>
+        <th>Title</th>
+        <th>Category</th>
+        <th>Difficulty</th>
+        <th>Likes</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach (var recipe in Model)
+    {
+        <tr>
+            <td>@recipe.Title</td>
+            <td>@recipe.Category?.Name</td>
+            <td>@recipe.Difficulty</td>
+            <td>@recipe.Likes.Count</td>
+            <td>
+                <a href="/Recipes/Details/@recipe.Id">Details</a>
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>
