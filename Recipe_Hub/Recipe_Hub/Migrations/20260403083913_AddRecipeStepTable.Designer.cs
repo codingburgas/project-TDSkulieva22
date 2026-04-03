@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Recipe_Hub.Data;
 
@@ -11,9 +12,11 @@ using Recipe_Hub.Data;
 namespace Recipe_Hub.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260403083913_AddRecipeStepTable")]
+    partial class AddRecipeStepTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -346,12 +349,6 @@ namespace Recipe_Hub.Migrations
                     b.Property<int>("Difficulty")
                         .HasColumnType("int");
 
-                    b.Property<string>("MainImagePath")
-                        .IsRequired()
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("nvarchar(max)")
-                        .HasDefaultValue("/Resources/Images/default.png");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -367,31 +364,6 @@ namespace Recipe_Hub.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("Recipes");
-                });
-
-            modelBuilder.Entity("Recipe_Hub.Models.RecipeImage", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("ImagePath")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RecipeId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("RecipeId");
-
-                    b.ToTable("RecipeImages");
                 });
 
             modelBuilder.Entity("Recipe_Hub.Models.RecipeIngredient", b =>
@@ -549,17 +521,6 @@ namespace Recipe_Hub.Migrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Recipe_Hub.Models.RecipeImage", b =>
-                {
-                    b.HasOne("Recipe_Hub.Models.Recipe", "Recipe")
-                        .WithMany("GalleryImages")
-                        .HasForeignKey("RecipeId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Recipe");
-                });
-
             modelBuilder.Entity("Recipe_Hub.Models.RecipeIngredient", b =>
                 {
                     b.HasOne("Recipe_Hub.Models.Ingredient", "Ingredient")
@@ -582,7 +543,7 @@ namespace Recipe_Hub.Migrations
             modelBuilder.Entity("Recipe_Hub.Models.RecipeStep", b =>
                 {
                     b.HasOne("Recipe_Hub.Models.Recipe", "Recipe")
-                        .WithMany("Steps")
+                        .WithMany()
                         .HasForeignKey("RecipeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -604,13 +565,9 @@ namespace Recipe_Hub.Migrations
                 {
                     b.Navigation("Comments");
 
-                    b.Navigation("GalleryImages");
-
                     b.Navigation("Likes");
 
                     b.Navigation("RecipeIngredients");
-
-                    b.Navigation("Steps");
                 });
 #pragma warning restore 612, 618
         }

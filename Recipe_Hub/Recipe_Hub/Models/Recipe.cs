@@ -30,9 +30,13 @@ namespace Recipe_Hub.Models
         public string UserId { get; set; }
         public IdentityUser User { get; set; }
 
+        public string MainImagePath { get; set; } = "/Resources/Images/default.png";
+        
         // Navigation properties
         public ICollection<Comment> Comments { get; set; } = new List<Comment>();
         public ICollection<RecipeIngredient> RecipeIngredients { get; set; } = new List<RecipeIngredient>();
         public ICollection<Like> Likes { get; set; } = new List<Like>();
+        public ICollection<RecipeStep> Steps { get; set; } = new List<RecipeStep>();
+        public ICollection<RecipeImage> GalleryImages { get; set; } = new List<RecipeImage>();
     }
 }
