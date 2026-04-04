@@ -195,5 +195,120 @@ public class RecipesController : Controller
         TempData["Success"] = "Recipe created successfully!";
         return RedirectToAction(nameof(Index));
     }
+    
+    [Authorize]
+    public async Task<IActionResult> Edit(int id)
+    {
+        var recipe = await _context.Recipes
+            .Include(r => r.RecipeIngredients)
+            .Include(r => r.Steps)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (recipe == null)
+            return NotFound();
+
+        if (recipe.UserId != _userManager.GetUserId(User))
+            return Forbid();
+
+        var vm = new CreateRecipeViewModel
+        {
+            Title = recipe.Title,
+            Description = recipe.Description,
+            CookingTime = recipe.CookingTime,
+            Difficulty = recipe.Difficulty,
+            CategoryId = recipe.CategoryId,
+            IngredientIds = recipe.RecipeIngredients.Select(ri => ri.IngredientId).ToList(),
+            Quantities = recipe.RecipeIngredients.Select(ri => ri.Quantity).ToList(),
+            Steps = recipe.Steps.OrderBy(s => s.StepNumber).Select(s => s.Description).ToList(),
+
+            Categories = _context.Categories
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .ToList(),
+
+            Ingredients = _context.Ingredients
+                .Select(i => new SelectListItem { Value = i.Id.ToString(), Text = i.Name })
+                .ToList()
+        };
+
+        return View(vm);
+    }
+    
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> Edit(int id, CreateRecipeViewModel model)
+    {
+        
+        var recipe = await _context.Recipes
+            .Include(r => r.RecipeIngredients)
+            .Include(r => r.Steps)
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (recipe == null)
+            return NotFound();
+
+        if (recipe.UserId != _userManager.GetUserId(User))
+            return Forbid();
+
+        if (!ModelState.IsValid)
+        {
+            model.Categories = _context.Categories
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .ToList();
+
+            model.Ingredients = _context.Ingredients
+                .Select(i => new SelectListItem { Value = i.Id.ToString(), Text = i.Name })
+                .ToList();
+
+            return View(model);
+        }
+        
+        if (model.MainImage != null)
+        {
+            var fileName = Guid.NewGuid() + Path.GetExtension(model.MainImage.FileName);
+            var uploads = Path.Combine(_env.WebRootPath, "Resources", "Images");
+            Directory.CreateDirectory(uploads);
+
+            var filePath = Path.Combine(uploads, fileName);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await model.MainImage.CopyToAsync(stream);
+            }
+
+            recipe.MainImagePath = "/Resources/Images/" + fileName;
+        }
+
+        recipe.Title = model.Title;
+        recipe.Description = model.Description;
+        recipe.CookingTime = model.CookingTime;
+        recipe.Difficulty = model.Difficulty;
+        recipe.CategoryId = model.CategoryId;
+
+        recipe.RecipeIngredients.Clear();
+        for (int i = 0; i < model.IngredientIds.Count; i++)
+        {
+            if (model.IngredientIds[i] == 0) continue;
+
+            recipe.RecipeIngredients.Add(new RecipeIngredient
+            {
+                IngredientId = model.IngredientIds[i],
+                Quantity = model.Quantities[i]
+            });
+        }
+
+        recipe.Steps.Clear();
+        for (int i = 0; i < model.Steps.Count; i++)
+        {
+            recipe.Steps.Add(new RecipeStep
+            {
+                StepNumber = i + 1,
+                Description = model.Steps[i]
+            });
+        }
+
+        await _context.SaveChangesAsync();
+
+        TempData["Success"] = "Recipe updated successfully!";
+        return RedirectToAction(nameof(Details), new { id = recipe.Id });
+    }
 }
 

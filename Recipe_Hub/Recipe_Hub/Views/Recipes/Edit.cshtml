@@ -1,0 +1,122 @@
+﻿@model Recipe_Hub.Models.ViewModels.CreateRecipeViewModel
+
+<h2>Edit Recipe</h2>
+
+<form asp-action="Edit" method="post" enctype="multipart/form-data">
+
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+        <span asp-validation-for="Description" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CookingTime"></label>
+        <input asp-for="CookingTime" class="form-control" />
+        <span asp-validation-for="CookingTime" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Difficulty"></label>
+        <select asp-for="Difficulty" class="form-control">
+            <option>Easy</option>
+            <option>Medium</option>
+            <option>Hard</option>
+        </select>
+        <span asp-validation-for="Difficulty" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="CategoryId">Category</label>
+        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control"></select>
+        <span asp-validation-for="CategoryId" class="text-danger"></span>
+    </div>
+
+    <h4>Ingredients</h4>
+    <div id="ingredients-list">
+        @for (int i = 0; i < Model.IngredientIds.Count; i++)
+        {
+            <div class="form-group">
+                <select asp-for="IngredientIds[i]" class="form-control" asp-items="Model.Ingredients"></select>
+                <input asp-for="Quantities[i]" class="form-control mt-1" placeholder="Quantity" />
+            </div>
+        }
+    </div>
+    <button type="button" class="btn btn-success mb-3" onclick="addIngredient()">Add Ingredient</button>
+
+    <h4>Steps</h4>
+    <div id="steps-list">
+        @for (int i = 0; i < Model.Steps.Count; i++)
+        {
+            <div class="form-group">
+                <textarea asp-for="Steps[i]" class="form-control"></textarea>
+            </div>
+        }
+    </div>
+    <button type="button" class="btn btn-success mb-3" onclick="addStep()">Add Step</button>
+
+    <h4>Main Image</h4>
+    <div class="form-group">
+        <input type="file" asp-for="MainImage" class="form-control" />
+    </div>
+
+    <h4>Gallery Images (optional)</h4>
+    <div class="form-group">
+        <input type="file" asp-for="GalleryImages" class="form-control" multiple />
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+    <a asp-action="Details" asp-route-id="@ViewContext.RouteData.Values["id"]" class="btn btn-secondary mt-3">Cancel</a>
+
+</form>
+
+@section Scripts {
+    <script>
+    function addIngredient() {
+        const container = document.getElementById("ingredients-list");
+        const index = container.children.length;
+
+        const firstSelectEl = document.querySelector("select[name='IngredientIds[0]']");
+        if (!firstSelectEl) return;
+
+        const cloned = firstSelectEl.cloneNode(true);
+        cloned.name = `IngredientIds[${index}]`;
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "form-group";
+
+        wrapper.appendChild(cloned);
+
+        const qtyInput = document.createElement("input");
+        qtyInput.name = `Quantities[${index}]`;
+        qtyInput.className = "form-control mt-1";
+        qtyInput.placeholder = "Quantity";
+
+        wrapper.appendChild(qtyInput);
+
+        container.appendChild(wrapper);
+    }
+
+    function addStep() {
+        const container = document.getElementById("steps-list");
+        const index = container.children.length;
+
+        const wrapper = document.createElement("div");
+        wrapper.className = "form-group";
+
+        const textarea = document.createElement("textarea");
+        textarea.name = `Steps[${index}]`;
+        textarea.className = "form-control";
+        textarea.placeholder = "Step description";
+
+        wrapper.appendChild(textarea);
+        container.appendChild(wrapper);
+    }
+</script>
+}
