@@ -8,6 +8,7 @@ using Recipe_Hub.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
+using System.Security.Claims;
 
 namespace Recipe_Hub.Controllers;
 
@@ -39,6 +40,7 @@ public class RecipesController : Controller
             .Include(r => r.Category)
             .Include(r => r.RecipeIngredients).ThenInclude(ri => ri.Ingredient)
             .Include(r => r.Steps)
+            .Include(r => r.Likes)
             .FirstOrDefaultAsync(r => r.Id == id);
         
         if (recipe == null)
@@ -312,5 +314,44 @@ public class RecipesController : Controller
         TempData["Success"] = "Recipe updated successfully!";
         return RedirectToAction(nameof(Details), new { id = recipe.Id });
     }
+    
+    [HttpPost]
+    public IActionResult Like(int id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (userId == null)
+            return Unauthorized();
+
+        var recipe = _context.Recipes
+            .Include(r => r.Likes)
+            .FirstOrDefault(r => r.Id == id);
+
+        if (recipe == null)
+            return NotFound();
+
+        var existingLike = recipe.Likes.FirstOrDefault(l => l.UserId == userId);
+
+        bool liked;
+
+        if (existingLike == null)
+        {
+            recipe.Likes.Add(new Like
+            {
+                RecipeId = id,
+                UserId = userId
+            });
+            liked = true;
+        }
+        else
+        {
+            _context.Likes.Remove(existingLike);
+            liked = false;
+        }
+
+        _context.SaveChanges();
+
+        return Json(new { likes = recipe.Likes.Count, liked });
+    }
+    
 }
 

@@ -1,6 +1,11 @@
 ﻿@model Recipe_Hub.Models.Recipe
 @using System.Security.Claims
 
+@{
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    bool userLiked = Model.Likes.Any(l => l.UserId == userId);
+}
+
 <h2>@Model.Title</h2>
 @if (User.Identity.IsAuthenticated &&
      Model.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
@@ -16,9 +21,10 @@
 <ul>
     @foreach (var ri in Model.RecipeIngredients)
     {
-        <li>@ri.Ingredient.Name</li>
+        <li><strong>@ri.Ingredient.Name:</strong> @ri.Quantity</li>
     }
 </ul>
+
 <h3>Steps</h3>
 <ol>
     @foreach (var step in Model.Steps.OrderBy(s => s.StepNumber))
@@ -27,6 +33,44 @@
         <ol><strong>Step @step.StepNumber:</strong> @step.Description</ol>
     }
 </ol>
-<h3>Likes: @Model.Likes.Count</h3>
+
+<button id="likeBtn" class="btn @(userLiked ? "btn-danger" : "btn-outline-danger")" style="font-size: 20px;">
+    <span id="heartIcon">@(userLiked ? "❤️" : "♡")</span>
+    <span id="likeCount">@Model.Likes.Count</span>
+</button>
 
 <a href="/Recipes/Index">Back to list</a>
+
+<script>
+    const likeBtn = document.getElementById("likeBtn");
+
+    likeBtn.addEventListener("click", function () {
+        fetch('/Recipes/Like/@Model.Id', {
+            method: 'POST'
+        })
+        .then(response => {
+            if (!response.ok) {
+                alert("You must be logged in to like recipes.");
+                return;
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (!data) return;
+
+            document.getElementById("likeCount").textContent = data.likes;
+
+            const heart = document.getElementById("heartIcon");
+
+            if (data.liked) {
+                heart.textContent = "❤️";
+                likeBtn.classList.remove("btn-outline-danger");
+                likeBtn.classList.add("btn-danger");
+            } else {
+                heart.textContent = "♡";
+                likeBtn.classList.remove("btn-danger");
+                likeBtn.classList.add("btn-outline-danger");
+            }
+        });
+    });
+</script>
