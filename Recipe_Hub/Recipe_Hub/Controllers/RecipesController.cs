@@ -353,5 +353,45 @@ public class RecipesController : Controller
         return Json(new { likes = recipe.Likes.Count, liked });
     }
     
+    public IActionResult Delete(int id)
+    {
+        var recipe = _context.Recipes
+            .FirstOrDefault(r => r.Id == id);
+
+        if (recipe == null)
+            return NotFound();
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (recipe.UserId != userId)
+            return Unauthorized();
+
+        return View(recipe);
+    }
+    
+    [HttpPost]
+    public IActionResult Delete(Recipe recipe)
+    {
+        var dbRecipe = _context.Recipes
+            .Include(r => r.RecipeIngredients)
+            .Include(r => r.Steps)
+            .Include(r => r.Likes)
+            .FirstOrDefault(r => r.Id == recipe.Id);
+
+        if (dbRecipe == null)
+            return NotFound();
+
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (dbRecipe.UserId != userId)
+            return Unauthorized();
+
+        _context.RecipeIngredients.RemoveRange(dbRecipe.RecipeIngredients);
+        _context.RecipeSteps.RemoveRange(dbRecipe.Steps);
+        _context.Likes.RemoveRange(dbRecipe.Likes);
+
+        _context.Recipes.Remove(dbRecipe);
+        _context.SaveChanges();
+
+        return RedirectToAction("Index");
+    }
 }
 
