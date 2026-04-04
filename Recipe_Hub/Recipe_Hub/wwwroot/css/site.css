@@ -20,3 +20,16 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.no-bg-btn {
+    background: none;
+    border: none;
+    color: red;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 0 6px;
+}
+
+.no-bg-btn:hover {
+    color: darkred;
+}

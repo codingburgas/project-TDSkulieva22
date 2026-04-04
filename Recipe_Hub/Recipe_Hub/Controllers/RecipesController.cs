@@ -283,7 +283,9 @@ public class RecipesController : Controller
         recipe.Difficulty = model.Difficulty;
         recipe.CategoryId = model.CategoryId;
 
-        recipe.RecipeIngredients.Clear();
+        _context.RecipeIngredients.RemoveRange(recipe.RecipeIngredients);
+        recipe.RecipeIngredients = new List<RecipeIngredient>();
+        
         for (int i = 0; i < model.IngredientIds.Count; i++)
         {
             if (model.IngredientIds[i] == 0) continue;

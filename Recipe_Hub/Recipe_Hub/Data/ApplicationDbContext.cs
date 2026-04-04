@@ -29,7 +29,7 @@ public class ApplicationDbContext : IdentityDbContext
 
         // Many-to-Many Recipe -> Ingredient
         builder.Entity<RecipeIngredient>()
-            .HasKey(ri => new { ri.RecipeId, ri.IngredientId });
+            .HasKey(ri => ri.Id);
 
         builder.Entity<RecipeIngredient>()
             .HasOne(ri => ri.Recipe)
