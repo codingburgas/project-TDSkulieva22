@@ -1,8 +1,76 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    Layout = "_Layout";
+    ViewData["Title"] = "Home";
+    ViewData["BodyClass"] = "home-page";
 }
+<section class="video-hero">
+    <video autoplay muted loop playsinline class="w-100 hero-video">
+        <source src="/Resources/videos/hero.mp4" type="video/mp4">
+    </video>
+</section>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="mb-4 fw-bold">Inspiration for Every Chef</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="p-4 shadow-sm bg-white rounded">
+                    <p class="fst-italic">“Cooking is like love. It should be entered into with abandon or not at all.”</p>
+                    <p class="fw-bold">— Julia Child</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 shadow-sm bg-white rounded">
+                    <p class="fst-italic">“The secret of good food is that it’s honest, fresh, and made with love.”</p>
+                    <p class="fw-bold">— Gordon Ramsay</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 shadow-sm bg-white rounded">
+                    <p class="fst-italic">“You don’t need a silver fork to eat good food.”</p>
+                    <p class="fw-bold">— Paul Prudhomme</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container text-center">
+        <h2 class="mb-4 fw-bold">Quick Cooking Tips</h2>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="p-4 bg-light rounded shadow-sm">
+                    <h5 class="fw-bold">Taste as You Go</h5>
+                    <p>Adjust flavors while cooking for the best results.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 bg-light rounded shadow-sm">
+                    <h5 class="fw-bold">Mise en Place</h5>
+                    <p>Prepare everything before you start cooking.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="p-4 bg-light rounded shadow-sm">
+                    <h5 class="fw-bold">Don’t Skip Resting</h5>
+                    <p>Let your dish rest for better flavor.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5 text-center cta-section">
+    <div class="container">
+        <h2 class="fw-bold">Have a recipe to share?</h2>
+        <p class="lead">Inspire others with your favorite dish!</p>
+        <a href="/Recipes/Create" class="btn btn-dark btn-lg px-4">Add Your Recipe</a>
+    </div>
+</section>
