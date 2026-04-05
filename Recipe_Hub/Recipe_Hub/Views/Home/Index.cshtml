@@ -8,30 +8,34 @@
         <source src="/Resources/videos/hero.mp4" type="video/mp4">
     </video>
 </section>
-
+<br/>
+<br/>
 <section class="py-5">
     <div class="container text-center">
         <h2 class="mb-4 fw-bold">Inspiration for Every Chef</h2>
-
+        <br/>
         <div class="row g-4">
             <div class="col-md-4">
-                <div class="p-4 shadow-sm bg-white rounded">
-                    <p class="fst-italic">“Cooking is like love. It should be entered into with abandon or not at all.”</p>
-                    <p class="fw-bold">— Julia Child</p>
+                <div class="chef-card quote-card">
+                    <span class="quote-icon">“</span>
+                    <p class="quote">Cooking is like love. It should be entered into with abandon or not at all.</p>
+                    <p class="author">— Julia Child</p>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="p-4 shadow-sm bg-white rounded">
-                    <p class="fst-italic">“The secret of good food is that it’s honest, fresh, and made with love.”</p>
-                    <p class="fw-bold">— Gordon Ramsay</p>
+                <div class="chef-card quote-card">
+                    <span class="quote-icon">“</span>
+                    <p class="quote">The secret of good food is that it’s honest, fresh, and made with love.</p>
+                    <p class="author">— Gordon Ramsay</p>
                 </div>
             </div>
 
             <div class="col-md-4">
-                <div class="p-4 shadow-sm bg-white rounded">
-                    <p class="fst-italic">“You don’t need a silver fork to eat good food.”</p>
-                    <p class="fw-bold">— Paul Prudhomme</p>
+                <div class="chef-card quote-card">
+                    <span class="quote-icon">“</span>
+                    <p class="quote">You don’t need a silver fork to eat good food.</p>
+                    <p class="author">— Paul Prudhomme</p>
                 </div>
             </div>
         </div>
@@ -42,27 +46,20 @@
     <div class="container text-center">
         <h2 class="mb-4 fw-bold">Quick Cooking Tips</h2>
 
-        <div class="row g-4">
+        <div class="row g-4 justify-content-center">
+
             <div class="col-md-4">
-                <div class="p-4 bg-light rounded shadow-sm">
-                    <h5 class="fw-bold">Taste as You Go</h5>
-                    <p>Adjust flavors while cooking for the best results.</p>
-                </div>
+                <img src="Resources/images/tip1.png" class="tip-img" alt="Taste as You Go">
             </div>
 
             <div class="col-md-4">
-                <div class="p-4 bg-light rounded shadow-sm">
-                    <h5 class="fw-bold">Mise en Place</h5>
-                    <p>Prepare everything before you start cooking.</p>
-                </div>
+                <img src="Resources/images/tip2.png" class="tip-img" alt="Mise en Place">
             </div>
 
             <div class="col-md-4">
-                <div class="p-4 bg-light rounded shadow-sm">
-                    <h5 class="fw-bold">Don’t Skip Resting</h5>
-                    <p>Let your dish rest for better flavor.</p>
-                </div>
+                <img src="Resources/images/tip3.png" class="tip-img" alt="Don't Skip Resting">
             </div>
+
         </div>
     </div>
 </section>
@@ -71,6 +68,24 @@
     <div class="container">
         <h2 class="fw-bold">Have a recipe to share?</h2>
         <p class="lead">Inspire others with your favorite dish!</p>
-        <a href="/Recipes/Create" class="btn btn-dark btn-lg px-4">Add Your Recipe</a>
+        <a asp-controller="Recipes" asp-action="Create" class="btn btn-dark btn-lg px-4">
+            Add Your Recipe
+        </a>
     </div>
 </section>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const titles = document.querySelectorAll("h2.fw-bold");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("animate");
+            }
+        });
+    }, { threshold: 0.4 });
+
+    titles.forEach(title => observer.observe(title));
+});
+</script>

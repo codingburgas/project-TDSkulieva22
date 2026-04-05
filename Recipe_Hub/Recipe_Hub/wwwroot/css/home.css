@@ -1,4 +1,7 @@
-﻿.home-page header,
+﻿@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
+
+.home-page header,
 .home-page main,
 .video-hero {
     margin: 0;
@@ -40,13 +43,134 @@
 .home-page main{
     background: linear-gradient(
             to bottom,
-            #4f4338 10%,
-            #f5efe7 35%,
-            #f5efe7 55%,
-            #918379 100%
+            #B7472A 5%,
+            #EB9788 3%,
+            #FFF2E5 75%,
+            #FFF2E5 100%
     );
 }
 
 .cta-section {
-    background-color: #baaea6;
+    background-color: rgba(235, 151, 136, 0.35);
+    backdrop-filter: blur(4px);
 }
+
+h2.fw-bold {
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #B7472A;
+    letter-spacing: 1px;
+    margin-bottom: 40px;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.7s ease-out;
+}
+
+h2.fw-bold.animate {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+h2.fw-bold:nth-of-type(1).animate {
+    transition-delay: 0.1s;
+    animation-delay: 0.1s;
+}
+
+h2.fw-bold:nth-of-type(2).animate {
+    transition-delay: 0.4s;
+    animation-delay: 0.4s;
+}
+
+h2.fw-bold:nth-of-type(3).animate {
+    transition-delay: 0.7s;
+    animation-delay: 0.7s;
+}
+
+.quote-card {
+    background: linear-gradient(145deg, #f5efe7, #ffffff);
+    border-radius: 20px;
+    padding: 40px 30px;
+    position: relative;
+    text-align: center;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border: 3px dotted #EB9788;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+    transition: transform 0.3s ease;
+}
+
+.quote-card:hover {
+    transform: scale(1.05);
+}
+
+.quote-icon {
+    font-size: 110px;
+    font-weight: bold;
+    color: #B7472A;
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    opacity: 0.4;
+    pointer-events: none;
+}
+
+.quote-card::after {
+    content: "”";
+    font-size: 110px;
+    font-weight: bold;
+    color: #B7472A;
+    position: absolute;
+    bottom: -10px;
+    right: 20px;
+    opacity: 0.4;
+    transform: rotate(180deg);
+    pointer-events: none;
+}
+
+.quote-card::before {
+    content: "";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 25px;
+    background: rgba(255,255,255,0.6);
+    border-radius: 5px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.quote {
+    font-style: italic;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    color: #4f4338;
+    margin-bottom: 15px;
+}
+
+.author {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #B7472A;
+}
+
+body {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.tip-img {
+    width: 100%;
+    max-width: 380px;
+    transition: transform 0.25s ease-in-out;
+    border-radius: 8px;
+    display: block;
+    margin: 0 auto;
+}
+
+.tip-img:hover {
+    transform: scale(1.08);
+}
+
