@@ -8,26 +8,73 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Recipe_Hub.styles.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body class="@ViewData["BodyClass"]">
 <header>
-    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow">
-        <div class="container-fluid">
-            <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Recipe_Hub</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                    aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white custom-nav shadow-nav">
+        <div class="container d-flex justify-content-between align-items-center">
+
+            <a class="navbar-brand d-flex align-items-center ms-auto" asp-controller="Home" asp-action="Index">
+                <img src="~/Resources/Images/logo.png" class="nav-logo" alt="Logo">
+                <span class="brand-text ms-2">Dishlly</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                <ul class="navbar-nav flex-grow-1">
+
+            <div class="collapse navbar-collapse justify-content-end" id="mainNav">
+
+                <ul class="navbar-nav align-items-center me-3">
+
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link nav-anim" asp-controller="Home" asp-action="Index">
+                            <i class="fa-solid fa-house me-2"></i> Home
+                        </a>
                     </li>
+
                     <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                        <a class="nav-link nav-anim" asp-controller="Recipes" asp-action="Index">
+                            <i class="fa-solid fa-book-open me-2"></i> Recipes
+                        </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link nav-anim" asp-controller="Recipes" asp-action="Create">
+                            <i class="fa-solid fa-circle-plus me-2"></i> Create Recipe
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link nav-anim" asp-controller="Statistics" asp-action="Index">
+                            <i class="fa-solid fa-chart-line me-2"></i> Statistics
+                        </a>
+                    </li>
+
                 </ul>
-                <partial name="_LoginPartial"/>
+
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <div class="dropdown">
+                        <a class="d-flex align-items-center profile-btn" href="#" data-bs-toggle="dropdown">
+                            <img src="~/Resources/Images/default-user.png" class="profile-img" alt="User">
+                            <span class="profile-name">@User.Identity.Name</span>
+                        </a>
+
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index">Profile</a></li>
+                            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                        </ul>
+                    </div>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Login" class="btn login-btn ms-3">
+                        Login / Register
+                    </a>
+                }
+
             </div>
         </div>
     </nav>
@@ -46,6 +93,7 @@
 <script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 <script src="~/js/site.js" asp-append-version="true"></script>
+
 @await RenderSectionAsync("Scripts", required: false)
 
 <script>
