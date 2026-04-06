@@ -1,36 +1,115 @@
 ﻿@model IEnumerable<Recipe_Hub.Models.Recipe>
 
-<h2>All Recipes</h2>
+<h2 class="recipes-page-title fw-bold">All Recipes</h2>
+<p class="recipes-subtitle">Discover and explore recipes shared by our community.</p>
 
-@if (TempData["Success"] != null)
-{
-    <div class="alert alert-success">
-        @TempData["Success"]
+<form method="get" asp-action="Index" class="recipe-filters">
+
+    <select name="category" class="filter-select">
+        <option value="">Category</option>
+        @foreach (var cat in ViewBag.Categories)
+        {
+            <option value="@cat.Id">@cat.Name</option>
+        }
+    </select>
+
+    <select name="time" class="filter-select">
+        <option value="">Cooking Time</option>
+        <option value="15">Under 15 min</option>
+        <option value="30">Under 30 min</option>
+        <option value="60">Under 60 min</option>
+    </select>
+
+    <select name="difficulty" class="filter-select">
+        <option value="">Difficulty</option>
+        <option value="Easy">Easy</option>
+        <option value="Medium">Medium</option>
+        <option value="Hard">Hard</option>
+    </select>
+
+    <input type="text" name="search" class="filter-search" placeholder="Search by name..." />
+
+    <button type="submit" class="filter-btn">Search</button>
+
+</form>
+
+<div class="container">
+
+    <div class="row g-4">
+        @foreach (var recipe in Model)
+        {
+            <div class="col-md-4">
+                <div class="recipe-card shadow-sm">
+
+                    <div class="recipe-img-wrapper">
+                        <img src="@recipe.MainImagePath" class="recipe-img" alt="@recipe.Title" />
+                    </div>
+
+                    <div class="recipe-content p-3">
+
+                        <h4 class="recipe-title">@recipe.Title</h4>
+
+                        <p class="recipe-author">by @recipe.User?.UserName</p>
+
+                        <div class="recipe-info-row d-flex justify-content-between align-items-center mt-3">
+
+                            <div class="left-info d-flex align-items-center gap-3">
+                                <span><i class="fa-regular fa-clock me-1"></i>@recipe.CookingTime min</span>
+                                <span><i class="fa-solid fa-signal me-1"></i>@recipe.Difficulty</span>
+                            </div>
+
+                            <div class="right-likes">
+                                <i class="fa-regular fa-heart me-1"></i>@recipe.Likes.Count
+                            </div>
+
+                        </div>
+                        
+                        <a href="/Recipes/Details/@recipe.Id" class="btn view-btn w-100 mt-3">
+                            View Recipe
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        }
     </div>
-}
+</div>
 
-<table class="table">
-    <thead>
-    <tr>
-        <th>Title</th>
-        <th>Category</th>
-        <th>Difficulty</th>
-        <th>Likes</th>
-        <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    @foreach (var recipe in Model)
-    {
-        <tr>
-            <td>@recipe.Title</td>
-            <td>@recipe.Category?.Name</td>
-            <td>@recipe.Difficulty</td>
-            <td>@recipe.Likes.Count</td>
-            <td>
-                <a href="/Recipes/Details/@recipe.Id">Details</a>
-            </td>
-        </tr>
-    }
-    </tbody>
-</table>
+<div class="recipes-cta-section">
+    <h2 class="cta-title fw-bold">Can't find what you're looking for?</h2>
+    <p class="cta-subtitle">Create a recipe and share it with the community!</p>
+    <a href="/Recipes/Create" class="btn cta-btn">Create Recipe</a>
+</div>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    const title = document.querySelector(".recipes-page-title");
+    const subtitle = document.querySelector(".recipes-subtitle");
+    const cta = document.querySelector(".recipes-cta-section");
+
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+
+            if (entry.isIntersecting) {
+
+                if (entry.target === title)
+                    title.classList.add("animate");
+
+                if (entry.target === subtitle)
+                    subtitle.classList.add("animate");
+
+                if (entry.target === cta) {
+                    cta.querySelector(".cta-title").classList.add("cta-animate");
+                    cta.querySelector(".cta-subtitle").classList.add("cta-animate");
+                }
+            }
+        });
+    });
+
+    observer.observe(title);
+    observer.observe(subtitle);
+    observer.observe(cta);
+});
+</script>

@@ -43,9 +43,9 @@
 .home-page main{
     background: linear-gradient(
             to bottom,
-            #B7472A 5%,
-            #EB9788 3%,
-            #FFF2E5 75%,
+            #FFD5AB 1%,
+            #FFD5AB 1%,
+            #FFF2E5 55%,
             #FFF2E5 100%
     );
 }
@@ -97,7 +97,7 @@ h2.fw-bold:nth-of-type(3).animate {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    border: 3px dotted #EB9788;
+    border: 5px dotted #EB9788;
     box-shadow: 0 6px 15px rgba(0,0,0,0.15);
     transition: transform 0.3s ease;
 }
@@ -109,11 +109,11 @@ h2.fw-bold:nth-of-type(3).animate {
 .quote-icon {
     font-size: 110px;
     font-weight: bold;
-    color: #B7472A;
+    color: #FFD5AB;
     position: absolute;
     top: -10px;
     left: 20px;
-    opacity: 0.4;
+    opacity: 0.7;
     pointer-events: none;
 }
 
@@ -121,11 +121,11 @@ h2.fw-bold:nth-of-type(3).animate {
     content: "”";
     font-size: 110px;
     font-weight: bold;
-    color: #B7472A;
+    color: #FFD5AB;
     position: absolute;
     bottom: -10px;
     right: 20px;
-    opacity: 0.4;
+    opacity: 0.7;
     transform: rotate(180deg);
     pointer-events: none;
 }
@@ -174,3 +174,16 @@ body {
     transform: scale(1.08);
 }
 
+.cta-btn {
+    background-color: #EB9788;
+    color: white;
+    border-radius: 25px;
+    font-weight: 600;
+    transition: 0.3s ease;
+    border: 3px dotted #B7472A;
+}
+
+.cta-btn:hover {
+    background-color: #B7472A;
+    color: #FFF2E5;
+}

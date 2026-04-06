@@ -25,13 +25,52 @@ public class RecipesController : Controller
         _env = env;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string category, string time, string difficulty, string search)
     {
-        var recipes = await _context.Recipes
-            .Include(r => r.Category)
-            .ToListAsync();
+        ViewData["BodyClass"] = "recipes-page";
         
-        return View(recipes);
+        ViewBag.Categories = _context.Categories.ToList();
+        
+        var recipes = _context.Recipes
+            .Include(r => r.User)
+            .Include(r => r.Likes)
+            .Include(r => r.Category)
+            .AsQueryable();
+
+        if (!string.IsNullOrEmpty(category))
+        {
+            if (int.TryParse(category, out int catId))
+            {
+                recipes = recipes.Where(r => r.CategoryId == catId);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(time))
+        {
+            if (int.TryParse(time, out int t))
+            {
+                recipes = recipes.Where(r => r.CookingTime <= t);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(difficulty))
+        {
+            if (Enum.TryParse<DifficultyLevel>(difficulty, out var diffEnum))
+            {
+                recipes = recipes.Where(r => r.Difficulty == diffEnum);
+            }
+        }
+
+        if (!string.IsNullOrEmpty(search))
+        {
+            var terms = search.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+
+            recipes = recipes.Where(r =>
+                terms.Any(term => r.Title.ToLower().Contains(term))
+            );
+        }
+
+        return View(recipes.ToList());
     }
 
     public async Task<IActionResult> Details(int id)
@@ -50,6 +89,7 @@ public class RecipesController : Controller
 
         return View(recipe);
     }
+    
     [Authorize]
     public IActionResult Create()
     {
@@ -74,6 +114,7 @@ public class RecipesController : Controller
         
         return View(vm);
     }
+    
     [Authorize]
     [HttpPost]
     public async Task<IActionResult> Create(CreateRecipeViewModel model)
