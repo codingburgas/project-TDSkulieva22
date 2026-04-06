@@ -1,119 +1,165 @@
 ﻿@model Recipe_Hub.Models.ViewModels.CreateRecipeViewModel
+@{
+    Layout = "_Layout";
+}
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger">
         @TempData["Error"]
     </div>
 }
-<h2>Create Recipe</h2>
-<form asp-action="Create" method="post" enctype="multipart/form-data">
+<div class="recipe-form-container">
+    <h2 class="form-title">Create Recipe</h2>
 
-    <!-- Title -->
-    <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+    <form asp-action="Create" method="post" enctype="multipart/form-data">
+        <div class="row gx-4 gy-4">
 
-    <!-- Description -->
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+            <div class="col-lg-6">
+                <div class="card section-basic">
+                    <div class="card-header">
+                        <i class="bi bi-pencil-square"></i>
+                        Basic Information
+                    </div>
 
-    <!-- Category -->
-    <div class="form-group">
-        <label asp-for="CategoryId"></label>
-        <select asp-for="CategoryId" class="form-control" asp-items="Model.Categories">
-            <option value="">-- Select category --</option>
-        </select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
-    </div>
+                    <div class="card-body">
 
-    <!-- Cooking Time -->
-    <div class="form-group">
-        <label asp-for="CookingTime"></label>
-        <input asp-for="CookingTime" class="form-control" />
-        <span asp-validation-for="CookingTime" class="text-danger"></span>
-    </div>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label asp-for="Title"></label>
+                                <input asp-for="Title" class="form-control" />
+                            </div>
 
-    <!-- Difficulty -->
-    <div class="form-group">
-        <label asp-for="Difficulty"></label>
-        <select asp-for="Difficulty" class="form-control">
-            <option value="1">Easy</option>
-            <option value="2">Medium</option>
-            <option value="3">Hard</option>
-        </select>
-        <span asp-validation-for="Difficulty" class="text-danger"></span>
-    </div>
+                            <div class="form-group">
+                                <label asp-for="CookingTime"></label>
+                                <input asp-for="CookingTime" class="form-control" placeholder="Minutes" />
+                            </div>
+                        </div>
 
-    <!-- Ingredients -->
-    <h4>Ingredients</h4>
-    <div id="ingredients-container">
-        <div class="ingredient-row">
-            <select name="IngredientIds[0]" class="form-control" style="width: 40%; display:inline-block"
-                    asp-items="Model.Ingredients"></select>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label asp-for="CategoryId"></label>
+                                <select asp-for="CategoryId" class="form-select" asp-items="Model.Categories">
+                                    <option value="">-- Select category --</option>
+                                </select>
+                            </div>
 
-            <input name="Quantities[0]" class="form-control" style="width: 40%; display:inline-block"
-                   placeholder="Quantity (e.g. 200g)" />
+                            <div class="form-group">
+                                <label asp-for="Difficulty"></label>
+                                <select asp-for="Difficulty" class="form-select">
+                                    <option value="1">Easy</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">Hard</option>
+                                </select>
+                            </div>
+                        </div>
 
-            <button type="button" class="btn btn-danger remove-ingredient">X</button>
+                        <div class="form-group mt-3">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card section-images">
+                    <div class="card-header">
+                        <i class="bi bi-camera"></i>
+                        Images
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group mb-3">
+                            <label>Main Image</label>
+                            <input type="file" name="MainImage" class="form-control" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Gallery Images</label>
+                            <input type="file" name="GalleryImages" class="form-control" multiple />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
 
-    <button type="button" id="add-ingredient" class="btn btn-secondary mt-2">Add Ingredient</button>
+        <div class="row gx-4 gy-4 mt-2">
+            <div class="col-lg-6">
+                <div class="card section-ingredients">
+                    <div class="card-header">
+                        <i class="bi bi-basket"></i>
+                        Ingredients
+                    </div>
 
-    <!-- Steps in recipe -->
-    <h4 class="mt-4">Steps</h4>
-    <div id="steps-container">
-        <div class="step-row">
-            <textarea name="Steps[0]" class="form-control" placeholder="Describe step..."></textarea>
-            <button type="button" class="btn btn-danger remove-step mt-1">X</button>
+                    <div class="card-body">
+
+                        <div id="ingredients-container">
+                            <div class="ingredient-row d-flex flex-wrap gap-2 mb-2">
+                                <select name="IngredientIds[0]" class="form-select flex-grow-1" asp-items="Model.Ingredients"></select>
+                                <input name="Quantities[0]" class="form-control flex-grow-1" placeholder="Quantity (e.g. 200g)" />
+                                <button type="button" class="btn btn-danger remove-ingredient">✖</button>
+                            </div>
+                        </div>
+
+                        <button type="button" id="add-ingredient" class="btn add-ingredient-btn">+ Add Ingredient</button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card section-steps">
+                    <div class="card-header">
+                        <i class="bi bi-list-check"></i>
+                        Steps
+                    </div>
+
+                    <div class="card-body">
+
+                        <div id="steps-container">
+                            <div class="step-row mb-3">
+                                <textarea name="Steps[0]" class="form-control" rows="3" placeholder="Describe step..."></textarea>
+                                <button type="button" class="btn btn-danger remove-step mt-2">✖</button>
+                            </div>
+                        </div>
+
+                        <button type="button" id="add-step" class="btn add-step-btn">+ Add Step</button>
+
+                    </div>
+                </div>
+            </div>
+
         </div>
-    </div>
+        <div class="submit-wrapper mt-4">
+            <button type="submit" class="btn btn-primary btn-lg">Create Recipe</button>
+        </div>
 
-    <button type="button" id="add-step" class="btn btn-secondary mt-2">Add Step</button>
-
-    <!-- Images -->
-    <h4 class="mt-4">Images</h4>
-
-    <div class="form-group">
-        <label>Main Image</label>
-        <input type="file" name="MainImage" class="form-control" />
-    </div>
-
-    <div class="form-group">
-        <label>Gallery Images</label>
-        <input type="file" name="GalleryImages" class="form-control" multiple />
-    </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Create Recipe</button>
-</form>
+    </form>
+</div>
 
 @section Scripts {
     <script>
-    // Add Ingredient
     document.getElementById("add-ingredient").addEventListener("click", function () {
         const container = document.getElementById("ingredients-container");
         const index = container.querySelectorAll(".ingredient-row").length;
 
         const row = document.createElement("div");
-        row.classList.add("ingredient-row");
+        row.classList.add("ingredient-row", "d-flex", "flex-wrap", "gap-2", "mb-2");
 
         row.innerHTML = `
-            <select name="IngredientIds[${index}]" class="form-control" style="width: 40%; display:inline-block">
+           <select name="IngredientIds[${index}]" class="form-select flex-grow-1">
                 @foreach (var item in Model.Ingredients)
                 {
                     <option value="@item.Value">@item.Text</option>
                 }
             </select>
 
-            <input name="Quantities[${index}]" class="form-control" style="width: 40%; display:inline-block"
-                   placeholder="Quantity (e.g. 200g)" />
+            <input name="Quantities[${index}]" class="form-control flex-grow-1" placeholder="Quantity (e.g. 200g)" />
 
-            <button type="button" class="btn btn-danger remove-ingredient">X</button>
+            <button type="button" class="remove-ingredient">✖</button>
         `;
 
         container.appendChild(row);
@@ -132,11 +178,11 @@
         const index = container.querySelectorAll(".step-row").length;
 
         const row = document.createElement("div");
-        row.classList.add("step-row");
+        row.classList.add("step-row", "mb-3");
 
         row.innerHTML = `
-            <textarea name="Steps[${index}]" class="form-control" placeholder="Describe step..."></textarea>
-            <button type="button" class="btn btn-danger remove-step mt-1">X</button>
+            <textarea name="Steps[${index}]" class="form-control" placeholder="Describe step..." rows="3"></textarea>
+            <button type="button" class="remove-step">✖</button>
         `;
 
         container.appendChild(row);

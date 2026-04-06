@@ -1,0 +1,230 @@
+﻿body {
+    background: linear-gradient(to bottom, #FFD5AB 1%, #FFD5AB 1%, #FFF2E5 55%, #FFF2E5 100%);
+    font-family: "Poppins", "Segoe UI", sans-serif;
+    color: #333;
+}
+
+.form-title {
+    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 3rem;
+    font-weight: 700;
+    color: #B7472A;
+    letter-spacing: 1px;
+    margin-bottom: 35px;
+    animation: fadeSlideDown 0.9s ease-out;
+}
+
+@keyframes fadeSlideDown {
+    0% { opacity: 0; transform: translateY(-25px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+.recipe-form-container {
+    max-width: 1150px;
+    margin: 10px auto;
+    padding: 5px;
+}
+
+.card {
+    border-radius: 14px;
+    box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+    margin-bottom: 15px;
+    overflow: hidden;
+    flex: 1;
+    min-height: 130px;
+}
+
+.row > div {
+    display: block;
+}
+
+.section-basic .card-header { background-color: #B7472A; color: #FFF2E5; }
+.section-ingredients .card-header { background-color: #FFD5AB; color: #EB9788; }
+.section-steps .card-header { background-color: #B7472A; color: #FFD5AB; }
+.section-images .card-header { background-color: #EB9788; color: #B7472A; }
+
+.card-header {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    font-size: 1.45rem;
+    padding: 18px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card-header i {
+    font-size: 1.7rem;
+}
+
+.section-basic .card-body{
+    padding: 14px 18px;
+}
+
+.form-control, .form-select {
+    border-radius: 10px;
+    border: 1px solid #fff2e5;
+    transition: 0.2s;
+    font-size: 1.1rem;
+    padding: 10px 14px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    color: #4f4338;
+    background-color: #f6f4f1;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #B7472A;
+    box-shadow: 0 0 8px rgba(183,71,42,0.5);
+}
+
+.card-body label {
+    color: #4f4338;
+    font-weight: 600;
+}
+
+.form-row-2 {
+    display: flex;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.form-row-2 .form-group {
+    flex: 1 1 calc(50% - 20px);
+    max-width: calc(50% - 20px);
+}
+
+.ingredient-row, .step-row {
+    background: #FFF2E5;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #FFD5AB;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    display: flex;
+    align-items: center;
+}
+
+.ingredient-row select {
+    flex: 0 0 60%;
+}
+
+.ingredient-row input {
+    flex: 0 0 55%;
+}
+
+.ingredient-row .remove-ingredient {
+    flex: 0 0 auto;
+}
+
+.remove-ingredient, .remove-step {
+    background: none;
+    border: none;
+    color: #EB9788;
+    font-size: 1.4rem;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 0 6px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+.remove-ingredient:hover,
+.remove-step:hover {
+    color: #B7472A;
+    background: none;
+}
+
+.btn-primary {
+    background-color: #B7472A;
+    border: none;
+    border-radius: 10px;
+    padding: 14px 30px;
+    font-size: 1.2rem;
+}
+
+.btn-primary:hover {
+    background-color: #8F341F;
+}
+
+.btn-outline-success {
+    border-color: #EB9788;
+    color: #EB9788;
+}
+
+.btn-outline-success:hover {
+    background-color: #EB9788;
+    color: #fff;
+}
+
+.btn-outline-warning {
+    border-color: #FFD5AB;
+    color: #B7472A;
+}
+
+.btn-outline-warning:hover {
+    background-color: #FFD5AB;
+    color: #B7472A;
+}
+
+.submit-wrapper {
+    text-align: center;
+    margin-top: 25px;
+}
+
+.section-images .card-body {
+    min-height: 315px;
+}
+
+.add-ingredient-btn {
+    border: 2px dotted #EB9788;
+    color: #EB9788;
+    background: #FFF2E5;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.add-ingredient-btn:hover {
+    background: #EB9788;
+    color: white;
+}
+
+.add-step-btn {
+    border: 2px dotted #FFD5AB;
+    color: #B7472A;
+    background: transparent;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-weight: 600;
+    transition: 0.2s;
+}
+
+.add-step-btn:hover {
+    background: #FFD5AB;
+    color: white;
+}
+
+@media (max-width: 992px) {
+    .form-row-2 .form-group {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+    .card {
+        min-height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-title {
+        font-size: 2rem;
+    }
+    .ingredient-row, .step-row {
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+    }
+}
