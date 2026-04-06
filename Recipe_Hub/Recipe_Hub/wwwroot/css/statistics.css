@@ -1,0 +1,84 @@
+﻿body {
+    background-color: #faf7f2;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+h1, h3 {
+    color: #333;
+}
+
+.card {
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .2s ease, box-shadow .2s ease;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+}
+
+.card-img-top {
+    border-bottom: 1px solid #eee;
+}
+
+.user-card {
+    border-radius: 16px;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: transform .2s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+}
+
+.user-avatar {
+    width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    background: #ffb347;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.badge-box {
+    background: #fff7e6;
+    border-left: 4px solid #ffb347;
+    padding: 12px;
+    border-radius: 10px;
+}
+
+.progress {
+    background-color: #e8e4dd;
+    border-radius: 10px;
+    height: 12px;
+}
+
+.progress-bar {
+    background: linear-gradient(90deg, #ffb347, #ffcc33);
+    border-radius: 10px;
+}
+
+.btn-warning {
+    background-color: #ffb347;
+    border: none;
+    border-radius: 12px;
+    padding: 10px 24px;
+    font-weight: 600;
+    transition: background .2s ease;
+}
+
+.btn-warning:hover {
+    background-color: #ffa726;
+}
+
+.section-title {
+    margin-bottom: 20px;
+    font-weight: 600;
+}

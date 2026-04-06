@@ -80,17 +80,33 @@ public class RecipeService : IRecipeService
         public async Task<IEnumerable<Recipe>> GetTop3MostLikedAsync()
         {
             return await _context.Recipes
+                .Include(r => r.Likes)
                 .OrderByDescending(r => r.Likes.Count)
                 .Take(3)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<(string UserId, int RecipeCount)>> GetMostActiveUsersAsync()
+        public async Task<IEnumerable<(string UserName, int RecipeCount)>> GetMostActiveUsersAsync()
+        {
+            var data = await _context.Recipes
+                .Include(r => r.User)
+                .GroupBy(r => r.User.UserName)
+                .Select(g => new 
+                { 
+                    UserName = g.Key, 
+                    RecipeCount = g.Count() 
+                })
+                .OrderByDescending(x => x.RecipeCount)
+                .ToListAsync();
+
+            return data.Select(x => (x.UserName, x.RecipeCount));
+        }
+        
+        public async Task<Dictionary<string, int>> GetCategoryPopularityAsync()
         {
             return await _context.Recipes
-                .GroupBy(r => r.UserId)
-                .Select(g => new ValueTuple<string, int>(g.Key, g.Count()))
-                .OrderByDescending(x => x.Item2)
-                .ToListAsync();
+                .GroupBy(r => r.Category.Name)
+                .Select(g => new { Category = g.Key, Count = g.Count() })
+                .ToDictionaryAsync(x => x.Category, x => x.Count);
         }
 }

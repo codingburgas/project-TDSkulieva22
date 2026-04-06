@@ -15,5 +15,6 @@ public interface IRecipeService
     Task<IEnumerable<Recipe>> FilterByCookingTimeAsync(int maxMinutes);
 
     Task<IEnumerable<Recipe>> GetTop3MostLikedAsync();
-    Task<IEnumerable<(string UserId, int RecipeCount)>> GetMostActiveUsersAsync();
+    Task<IEnumerable<(string UserName, int RecipeCount)>> GetMostActiveUsersAsync();
+    Task<Dictionary<string, int>> GetCategoryPopularityAsync();
 }
