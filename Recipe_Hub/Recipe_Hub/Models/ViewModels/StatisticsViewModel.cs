@@ -3,6 +3,6 @@
 public class StatisticsViewModel
 {
     public IEnumerable<Recipe> TopRecipes { get; set; }
-    public IEnumerable<(string UserName, int RecipeCount)> MostActiveUsers { get; set; }
+    public IEnumerable<ActiveUserViewModel> MostActiveUsers { get; set; }
     public Dictionary<string, int> CategoryPopularity { get; set; }
 }

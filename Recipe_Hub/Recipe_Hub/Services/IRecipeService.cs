@@ -1,4 +1,5 @@
 ﻿using Recipe_Hub.Models;
+using Recipe_Hub.Models.ViewModels;
 
 namespace Recipe_Hub.Services;
 
@@ -15,6 +16,6 @@ public interface IRecipeService
     Task<IEnumerable<Recipe>> FilterByCookingTimeAsync(int maxMinutes);
 
     Task<IEnumerable<Recipe>> GetTop3MostLikedAsync();
-    Task<IEnumerable<(string UserName, int RecipeCount)>> GetMostActiveUsersAsync();
+    Task<IEnumerable<ActiveUserViewModel>> GetMostActiveUsersAsync();
     Task<Dictionary<string, int>> GetCategoryPopularityAsync();
 }

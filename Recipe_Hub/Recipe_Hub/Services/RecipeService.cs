@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Recipe_Hub.Data;
 using Recipe_Hub.Models;
+using Recipe_Hub.Models.ViewModels;
 
 namespace Recipe_Hub.Services;
 
@@ -80,26 +81,51 @@ public class RecipeService : IRecipeService
         public async Task<IEnumerable<Recipe>> GetTop3MostLikedAsync()
         {
             return await _context.Recipes
+                .Include(r => r.User)
                 .Include(r => r.Likes)
+                .Include(r => r.Comments)
                 .OrderByDescending(r => r.Likes.Count)
                 .Take(3)
                 .ToListAsync();
         }
 
-        public async Task<IEnumerable<(string UserName, int RecipeCount)>> GetMostActiveUsersAsync()
+        public async Task<IEnumerable<ActiveUserViewModel>> GetMostActiveUsersAsync()
         {
-            var data = await _context.Recipes
+            var recipes = await _context.Recipes
                 .Include(r => r.User)
-                .GroupBy(r => r.User.UserName)
-                .Select(g => new 
-                { 
-                    UserName = g.Key, 
-                    RecipeCount = g.Count() 
-                })
-                .OrderByDescending(x => x.RecipeCount)
+                .Include(r => r.Likes)
+                .Include(r => r.Comments)
                 .ToListAsync();
 
-            return data.Select(x => (x.UserName, x.RecipeCount));
+            var users = recipes
+                .GroupBy(r => new { r.UserId, r.User.UserName })
+                .Select(g =>
+                {
+                    var topRecipe = g
+                        .OrderByDescending(r => r.Likes.Count)
+                        .FirstOrDefault();
+
+                    return new ActiveUserViewModel
+                    {
+                        UserName = g.Key.UserName,
+                        RecipeCount = g.Count(),
+                        TotalLikes = g.Sum(r => r.Likes.Count),
+                        TotalComments = g.Sum(r => r.Comments.Count),
+
+                        TopRecipeTitle = topRecipe?.Title ?? "No recipes",
+                        TopRecipeLikes = topRecipe?.Likes.Count ?? 0,
+
+                        ActivityScore =
+                            g.Count() * 2 +
+                            g.Sum(r => r.Likes.Count) +
+                            g.Sum(r => r.Comments.Count)
+                    };
+                })
+                .OrderByDescending(u => u.ActivityScore)
+                .Take(3)
+                .ToList();
+
+            return users;
         }
         
         public async Task<Dictionary<string, int>> GetCategoryPopularityAsync()
