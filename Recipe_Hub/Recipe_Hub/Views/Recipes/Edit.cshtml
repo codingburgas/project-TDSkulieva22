@@ -1,175 +1,187 @@
 ﻿@model Recipe_Hub.Models.ViewModels.CreateRecipeViewModel
+@{
+    Layout = "_Layout";
+}
 
-<h2>Edit Recipe</h2>
+<div class="recipe-form-container">
+    <h2 class="form-title">Edit Recipe</h2>
 
-<form asp-action="Edit" method="post" enctype="multipart/form-data">
+    <form asp-action="Edit" method="post" enctype="multipart/form-data">
+        <div class="row gx-4 gy-4 first-row">
+            <div class="col-lg-4">
+                <div class="card section-basic">
+                    <div class="card-header">
+                        <i class="bi bi-pencil-square"></i>
+                        Basic Information
+                    </div>
 
-    <div class="form-group">
-        <label asp-for="Title"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
-    </div>
+                    <div class="card-body">
 
-    <div class="form-group">
-        <label asp-for="Description"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
-        <span asp-validation-for="Description" class="text-danger"></span>
-    </div>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label asp-for="Title"></label>
+                                <input asp-for="Title" class="form-control" />
+                            </div>
 
-    <div class="form-group">
-        <label asp-for="CookingTime"></label>
-        <input asp-for="CookingTime" class="form-control" />
-        <span asp-validation-for="CookingTime" class="text-danger"></span>
-    </div>
+                            <div class="form-group">
+                                <label asp-for="CookingTime"></label>
+                                <input asp-for="CookingTime" class="form-control" />
+                            </div>
+                        </div>
 
-    <div class="form-group">
-        <label asp-for="Difficulty"></label>
-        <select asp-for="Difficulty" class="form-control">
-            <option>Easy</option>
-            <option>Medium</option>
-            <option>Hard</option>
-        </select>
-        <span asp-validation-for="Difficulty" class="text-danger"></span>
-    </div>
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label asp-for="CategoryId"></label>
+                                <select asp-for="CategoryId" class="form-select" asp-items="Model.Categories"></select>
+                            </div>
 
-    <div class="form-group">
-        <label asp-for="CategoryId">Category</label>
-        <select asp-for="CategoryId" asp-items="Model.Categories" class="form-control"></select>
-        <span asp-validation-for="CategoryId" class="text-danger"></span>
-    </div>
+                            <div class="form-group">
+                                <label asp-for="Difficulty"></label>
+                                <select asp-for="Difficulty" class="form-select">
+                                    <option value="1">Easy</option>
+                                    <option value="2">Medium</option>
+                                    <option value="3">Hard</option>
+                                </select>
+                            </div>
+                        </div>
 
-    <h4>Ingredients</h4>
-    <div id="ingredients-list">
-        @for (int i = 0; i < Model.IngredientIds.Count; i++)
-        {
-            <div class="form-group ingredient-row d-flex gap-2">
-                <select asp-for="IngredientIds[i]" class="form-control" asp-items="Model.Ingredients"></select>
-                <input asp-for="Quantities[i]" class="form-control mt-1" placeholder="Quantity" />
-                <button type="button" class="no-bg-btn" onclick="removeIngredient(this)">✖</button>
-            </div>
-        }
-    </div>
-    <button type="button" class="btn btn-success mb-3" onclick="addIngredient()">Add Ingredient</button>
+                        <div class="form-group mt-3">
+                            <label asp-for="Description"></label>
+                            <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+                        </div>
 
-    <h4>Steps</h4>
-    <div id="steps-list">
-        @for (int i = 0; i < Model.Steps.Count; i++)
-        {
-            <div class="form-group step-row">
-                <div class="d-flex gap-2">
-                    <textarea asp-for="Steps[i]" class="form-control"></textarea>
-                    <button type="button" class="no-bg-btn" onclick="removeStep(this)">✖</button>
+                    </div>
                 </div>
             </div>
-        }
-    </div>
-    <button type="button" class="btn btn-success mb-3" onclick="addStep()">Add Step</button>
+            <div class="col-lg-4">
+                <div class="card section-ingredients">
+                    <div class="card-header">
+                        <i class="bi bi-basket"></i>
+                        Ingredients
+                    </div>
 
-    <h4>Main Image</h4>
-    <div class="form-group">
-        <input type="file" asp-for="MainImage" class="form-control" />
-    </div>
+                    <div class="card-body">
 
-    <h4>Gallery Images (optional)</h4>
-    <div class="form-group">
-        <input type="file" asp-for="GalleryImages" class="form-control" multiple />
-    </div>
+                        <div id="ingredients-container">
+                            @for (int i = 0; i < Model.IngredientIds.Count; i++)
+                            {
+                                <div class="ingredient-row d-flex flex-wrap gap-2 mb-2">
+                                    <select asp-for="IngredientIds[i]" class="form-select flex-grow-1" asp-items="Model.Ingredients"></select>
+                                    <input asp-for="Quantities[i]" class="form-control flex-grow-1" placeholder="Quantity" />
+                                    <button type="button" class="remove-ingredient">✖</button>
+                                </div>
+                            }
+                        </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
-    <a asp-action="Details" asp-route-id="@ViewContext.RouteData.Values["id"]" class="btn btn-secondary mt-3">Cancel</a>
+                        <button type="button" id="add-ingredient" class="btn add-ingredient-btn">+ Add Ingredient</button>
 
-</form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card section-steps">
+                    <div class="card-header">
+                        <i class="bi bi-list-check"></i>
+                        Steps
+                    </div>
+
+                    <div class="card-body">
+
+                        <div id="steps-container">
+                            @for (int i = 0; i < Model.Steps.Count; i++)
+                            {
+                                <div class="step-row mb-3">
+                                    <textarea asp-for="Steps[i]" class="form-control" rows="3"></textarea>
+                                    <button type="button" class="remove-step mt-2">✖</button>
+                                </div>
+                            }
+                        </div>
+
+                        <button type="button" id="add-step" class="btn add-step-btn">+ Add Step</button>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="row gx-4 gy-4 second-row mt-2">
+
+            <div class="col-lg-12">
+                <div class="card section-images wide-images-box">
+                    <div class="card-header">
+                        <i class="bi bi-camera"></i>
+                        Images
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="form-group mb-3">
+                            <label>Replace Main Image (optional)</label>
+                            <input type="file" asp-for="MainImage" class="form-control" />
+                        </div>
+
+                        <div class="form-group mb-3">
+                            <label>Add More Gallery Images (optional)</label>
+                            <input type="file" asp-for="GalleryImages" class="form-control" multiple />
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="submit-wrapper mt-4">
+            <button type="submit" class="btn-create">Save Changes</button>
+        </div>
+
+    </form>
+</div>
 
 @section Scripts {
     <script>
-        function addIngredient() {
-            const container = document.getElementById("ingredients-list");
-            const index = container.querySelectorAll(".ingredient-row").length;
-
-            const select = document.createElement("select");
-            select.className = "form-control";
-            select.name = `IngredientIds[${index}]`;
-
-            const options = document.querySelector("select[name='IngredientIds[0]']").options;
-            for (let opt of options) {
-                const newOpt = document.createElement("option");
-                newOpt.value = opt.value;
-                newOpt.textContent = opt.textContent;
-                select.appendChild(newOpt);
-            }
-
-            const qty = document.createElement("input");
-            qty.className = "form-control mt-1";
-            qty.name = `Quantities[${index}]`;
-            qty.placeholder = "Quantity";
-
-            const removeBtn = document.createElement("button");
-            removeBtn.type = "button";
-            removeBtn.className = "btn btn-danger";
-            removeBtn.textContent = "✖";
-            removeBtn.onclick = () => removeIngredient(removeBtn);
+        document.getElementById("add-ingredient").addEventListener("click", function () {
+            const container = document.getElementById("ingredients-container");
+            const index = container.children.length;
 
             const row = document.createElement("div");
-            row.className = "form-group ingredient-row d-flex gap-2";
+            row.className = "ingredient-row d-flex flex-wrap gap-2 mb-2";
 
-            row.appendChild(select);
-            row.appendChild(qty);
-            row.appendChild(removeBtn);
+            row.innerHTML = `
+                <select name="IngredientIds[${index}]" class="form-select flex-grow-1">
+                    ${document.querySelector("select[name='IngredientIds[0]']").innerHTML}
+                </select>
+                <input name="Quantities[${index}]" class="form-control flex-grow-1" placeholder="Quantity" />
+                <button type="button" class="remove-ingredient">✖</button>
+            `;
 
             container.appendChild(row);
-        }
-    
-    function removeIngredient(btn) {
-        btn.closest(".ingredient-row").remove();
-        reindexIngredients();
-    }
-
-    function reindexIngredients() {
-        const rows = document.querySelectorAll(".ingredient-row");
-        rows.forEach((row, i) => {
-            row.querySelector("select").name = `IngredientIds[${i}]`;
-            row.querySelector("input").name = `Quantities[${i}]`;
         });
-    }
-    
-    function addStep() {
-        const container = document.getElementById("steps-list");
-        const index = container.children.length;
 
-        const textarea = document.createElement("textarea");
-        textarea.name = `Steps[${index}]`;
-        textarea.className = "form-control";
-
-        const removeBtn = document.createElement("button");
-        removeBtn.type = "button";
-        removeBtn.className = "btn btn-danger";
-        removeBtn.textContent = "✖";
-        removeBtn.onclick = () => removeStep(removeBtn);
-
-        const wrapper = document.createElement("div");
-        wrapper.className = "form-group step-row";
-
-        const row = document.createElement("div");
-        row.className = "d-flex gap-2";
-
-        row.appendChild(textarea);
-        row.appendChild(removeBtn);
-
-        wrapper.appendChild(row);
-        container.appendChild(wrapper);
-    }
-
-    function removeStep(btn) {
-        btn.closest(".step-row").remove();
-        reindexSteps();
-    }
-
-    function reindexSteps() {
-        const rows = document.querySelectorAll(".step-row");
-        rows.forEach((row, i) => {
-            const textarea = row.querySelector("textarea");
-            textarea.name = `Steps[${i}]`;
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-ingredient")) {
+                e.target.closest(".ingredient-row").remove();
+            }
         });
-    }
-</script>
+        document.getElementById("add-step").addEventListener("click", function () {
+            const container = document.getElementById("steps-container");
+            const index = container.children.length;
+
+            const row = document.createElement("div");
+            row.className = "step-row mb-3";
+
+            row.innerHTML = `
+                <textarea name="Steps[${index}]" class="form-control" rows="3"></textarea>
+                <button type="button" class="remove-step mt-2">✖</button>
+            `;
+
+            container.appendChild(row);
+        });
+
+        document.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-step")) {
+                e.target.closest(".step-row").remove();
+            }
+        });
+    </script>
 }
