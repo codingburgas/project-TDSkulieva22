@@ -32,9 +32,9 @@
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
 
-                        <a asp-action="Delete" asp-route-id="@Model.Id" class="delete-btn-inline">
-                            <i class="fa-solid fa-trash"></i>
-                        </a>
+                        <button class="delete-btn-inline" data-bs-toggle="modal" data-bs-target="#deleteModal">
+                        <i class="fa-solid fa-trash"></i>
+                        </button>
                     </div>
                 }
 
@@ -154,6 +154,34 @@
         </a>
     </div>
 
+</div>
+
+<div class="modal fade" id="deleteModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content" style="border-radius: 14px;">
+
+            <div class="modal-header" style="background:#EB9788; color:white;">
+                <h5 class="modal-title">Confirm Deletion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" style="font-size:1.2rem;">
+                Are you sure you want to delete <strong>@Model.Title</strong>?
+            </div>
+
+            <div class="modal-footer">
+                <form method="post" asp-action="Delete">
+                    <input type="hidden" name="id" value="@Model.Id" />
+                    <button type="submit" class="btn btn-danger">Yes, delete</button>
+                </form>
+
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+            </div>
+
+        </div>
+    </div>
 </div>
 
 <script>

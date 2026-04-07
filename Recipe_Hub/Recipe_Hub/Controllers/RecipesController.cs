@@ -205,14 +205,7 @@ public class RecipesController : Controller
         for (int i = 0; i < model.IngredientIds.Count; i++)
         {
             if (model.IngredientIds[i] == 0) continue;
-            
-            //var ri = new RecipeIngredient
-            //{
-                //RecipeId = recipe.Id,
-                //IngredientId = model.IngredientIds[i],
-                //Quantity = model.Quantities[i]
-            //};
-            //_context.RecipeIngredients.Add(ri);
+
             recipe.RecipeIngredients.Add(new RecipeIngredient
             {
                 IngredientId = model.IngredientIds[i],
@@ -222,14 +215,6 @@ public class RecipesController : Controller
 
         for (int i = 0; i < model.Steps.Count; i++)
         {
-            //var step = new RecipeStep
-            //{
-                //RecipeId = recipe.Id,
-                //StepNumber = i + 1,
-                //Description = model.Steps[i]
-            //};
-
-            //_context.RecipeSteps.Add(step);
             recipe.Steps.Add(new RecipeStep
             {
                 StepNumber = i + 1,
@@ -397,42 +382,27 @@ public class RecipesController : Controller
         return Json(new { likes = recipe.Likes.Count, liked });
     }
     
+    [HttpPost]
     public IActionResult Delete(int id)
     {
         var recipe = _context.Recipes
+            .Include(r => r.Likes)
+            .Include(r => r.Comments)
+            .Include(r => r.RecipeIngredients)
+            .Include(r => r.Steps)
+            .Include(r => r.GalleryImages)
             .FirstOrDefault(r => r.Id == id);
 
         if (recipe == null)
             return NotFound();
 
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (recipe.UserId != userId)
-            return Unauthorized();
+        _context.Likes.RemoveRange(recipe.Likes);
+        _context.Comments.RemoveRange(recipe.Comments);
+        _context.RecipeIngredients.RemoveRange(recipe.RecipeIngredients);
+        _context.RecipeSteps.RemoveRange(recipe.Steps);
+        _context.RecipeImages.RemoveRange(recipe.GalleryImages);
+        _context.Recipes.Remove(recipe);
 
-        return View(recipe);
-    }
-    
-    [HttpPost]
-    public IActionResult Delete(Recipe recipe)
-    {
-        var dbRecipe = _context.Recipes
-            .Include(r => r.RecipeIngredients)
-            .Include(r => r.Steps)
-            .Include(r => r.Likes)
-            .FirstOrDefault(r => r.Id == recipe.Id);
-
-        if (dbRecipe == null)
-            return NotFound();
-
-        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-        if (dbRecipe.UserId != userId)
-            return Unauthorized();
-
-        _context.RecipeIngredients.RemoveRange(dbRecipe.RecipeIngredients);
-        _context.RecipeSteps.RemoveRange(dbRecipe.Steps);
-        _context.Likes.RemoveRange(dbRecipe.Likes);
-
-        _context.Recipes.Remove(dbRecipe);
         _context.SaveChanges();
 
         return RedirectToAction("Index");
