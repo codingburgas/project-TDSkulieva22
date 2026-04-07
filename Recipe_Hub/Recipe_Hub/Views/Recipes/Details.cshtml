@@ -12,7 +12,33 @@
         <img src="@Model.MainImagePath" alt="@Model.Title" class="recipe-main-img" />
 
         <div class="recipe-main-info">
-            <h1 class="recipe-title">@Model.Title</h1>
+            <div class="title-with-actions">
+
+                <h1 class="recipe-title">@Model.Title</h1>
+
+                @using Microsoft.AspNetCore.Identity
+                @inject UserManager<IdentityUser> UserManager
+
+                @{
+                    var currentUserId = UserManager.GetUserId(User);
+                    bool isOwner = Model.UserId == currentUserId;
+                    bool isAdmin = User.IsInRole("Admin");
+                }
+
+                @if (isOwner || isAdmin)
+                {
+                    <div class="edit-delete-inline">
+                        <a asp-action="Edit" asp-route-id="@Model.Id" class="edit-btn-inline">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+
+                        <a asp-action="Delete" asp-route-id="@Model.Id" class="delete-btn-inline">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </div>
+                }
+
+            </div>
             <div class="title-subrow">
 
                 <span class="recipe-date">

@@ -483,6 +483,57 @@
     color: #4a1f16;
 }
 
+.title-with-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+.edit-delete-inline {
+    display: flex;
+    gap: 10px;
+}
+
+.edit-btn-inline,
+.delete-btn-inline {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 18px;
+    transition: 0.25s ease;
+}
+
+/* EDIT BUTTON */
+.edit-btn-inline {
+    background: linear-gradient(180deg, #FFF2E5 0%, #FFD5AB 100%);
+    color: #5a2a1e;
+    border: 2px solid #e6b8a0;
+}
+
+.edit-btn-inline:hover {
+    background: linear-gradient(180deg, #FFD5AB 0%, #EB9788 100%);
+    transform: translateY(-2px);
+    color: #ffffff;
+}
+
+/* DELETE BUTTON */
+.delete-btn-inline {
+    background: linear-gradient(180deg, #ffb3b3 0%, #ff6b6b 100%);
+    color: #4a1f16;
+    border: 2px solid #e68a8a;
+}
+
+.delete-btn-inline:hover {
+    background: linear-gradient(180deg, #ff6b6b 0%, #b30000 100%);
+    color: white;
+    transform: translateY(-2px);
+}
+
 @keyframes fadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }

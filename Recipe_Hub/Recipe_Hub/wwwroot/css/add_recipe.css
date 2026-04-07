@@ -29,20 +29,52 @@
 .card {
     border-radius: 14px;
     box-shadow: 0 8px 22px rgba(0,0,0,0.25);
-    margin-bottom: 15px;
+    margin-bottom: 0px;
     overflow: hidden;
     flex: 1;
     min-height: 130px;
+}
+
+.wide-images-box {
+    min-height: 150px;
+    height: auto !important;
+}
+
+.first-row .col-lg-4 {
+    display: flex;
+}
+
+.first-row .card {
+    flex: 1;
+    min-height: 340px;
+}
+
+.section-basic {
+    background: linear-gradient(180deg, #FFF2E5 0%, #FFD5AB 100%);
+}
+
+.section-ingredients {
+    background: linear-gradient(180deg, #B7472A 0%, #FFF2E5 100%);
+}
+
+.section-steps {
+    background: linear-gradient(90deg, #FFF2E5 0%, #FFD5AB 100%);
+}
+
+.section-images {
+    background: transparent !important;
+    box-shadow: none !important;
+    padding: 15px;
 }
 
 .row > div {
     display: block;
 }
 
-.section-basic .card-header { background-color: #B7472A; color: #FFF2E5; }
-.section-ingredients .card-header { background-color: #FFD5AB; color: #EB9788; }
-.section-steps .card-header { background-color: #B7472A; color: #FFD5AB; }
-.section-images .card-header { background-color: #EB9788; color: #B7472A; }
+.section-basic .card-header { background-color: #EB9788; color: #FFF2E5; }
+.section-ingredients .card-header { background-color: #B7472A; color: #FFD5AB; }
+.section-steps .card-header { background-color: #EB9788; color: #FFF2E5; }
+.section-images .card-header { background-color: #FFD5AB; color: #B7472A; }
 
 .card-header {
     font-family: "Poppins", sans-serif;
@@ -136,16 +168,31 @@
     background: none;
 }
 
-.btn-primary {
-    background-color: #B7472A;
+.btn-create {
+    background: linear-gradient(30deg, #FFD5AB, #B7472A);
+    color: #4a1f16;
+    padding: 12px 20px;
+    border-radius: 30px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
     border: none;
-    border-radius: 10px;
-    padding: 14px 30px;
-    font-size: 1.2rem;
+    animation: floatPulse 3s ease-in-out infinite;
+    transition: 0.25s ease;
+    margin-bottom: 20px;
 }
 
-.btn-primary:hover {
-    background-color: #8F341F;
+@keyframes floatPulse {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+    100% { transform: translateY(0); }
+}
+
+.btn-create:hover {
+    animation: none;
+    transform: translateY(-5px);
+    background: linear-gradient(120deg, #FFD5AB, #B7472A);
+    border: 2px solid #B7472A;
 }
 
 .btn-outline-success {
@@ -174,36 +221,36 @@
 }
 
 .section-images .card-body {
-    min-height: 315px;
+    background: transparent !important;
 }
 
 .add-ingredient-btn {
     border: 2px dotted #EB9788;
     color: #EB9788;
     background: #FFF2E5;
-    border-radius: 10px;
+    border-radius: 20px;
     padding: 10px 18px;
     font-weight: 600;
     transition: 0.2s;
 }
 
 .add-ingredient-btn:hover {
-    background: #EB9788;
+    background: #B7472A;
     color: white;
 }
 
 .add-step-btn {
     border: 2px dotted #FFD5AB;
     color: #B7472A;
-    background: transparent;
-    border-radius: 10px;
+    background: #FFF2E5;
+    border-radius: 20px;
     padding: 10px 18px;
     font-weight: 600;
     transition: 0.2s;
 }
 
 .add-step-btn:hover {
-    background: #FFD5AB;
+    background: #EB9788;
     color: white;
 }
 
