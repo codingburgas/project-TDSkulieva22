@@ -6,42 +6,129 @@
     bool userLiked = Model.Likes.Any(l => l.UserId == userId);
 }
 
-<h2>@Model.Title</h2>
-@if (User.Identity.IsAuthenticated &&
-     Model.UserId == User.FindFirst(ClaimTypes.NameIdentifier)?.Value)
-{
-    <a class="btn btn-warning" href="/Recipes/Edit/@Model.Id">Edit</a>
-    <a class="btn btn-danger" href="/Recipes/Delete/@Model.Id">Delete</a>
-}
+<div class="recipe-details-page">
+    <div class="recipe-main-box">
 
-<p><strong>Description:</strong> @Model.Description</p>
-<p><strong>Category:</strong> @Model.Category?.Name</p>
-<p><strong>Difficulty:</strong> @Model.Difficulty</p>
-<p><strong>Cooking Time:</strong> @Model.CookingTime minutes</p>
+        <img src="@Model.MainImagePath" alt="@Model.Title" class="recipe-main-img" />
 
-<h3>Ingredients</h3>
-<ul>
-    @foreach (var ri in Model.RecipeIngredients)
-    {
-        <li><strong>@ri.Ingredient.Name:</strong> @ri.Quantity</li>
-    }
-</ul>
+        <div class="recipe-main-info">
+            <h1 class="recipe-title">@Model.Title</h1>
+            <div class="title-subrow">
 
-<h3>Steps</h3>
-<ol>
-    @foreach (var step in Model.Steps.OrderBy(s => s.StepNumber))
-    {
-        
-        <ol><strong>Step @step.StepNumber:</strong> @step.Description</ol>
-    }
-</ol>
+                <span class="recipe-date">
+                    <i class="fa-regular fa-calendar"></i>
+                    @Model.CreatedAt.ToString("dd MMM yyyy")
+                </span>
 
-<button id="likeBtn" class="btn @(userLiked ? "btn-danger" : "btn-outline-danger")" style="font-size: 20px;">
-    <span id="heartIcon">@(userLiked ? "❤️" : "♡")</span>
-    <span id="likeCount">@Model.Likes.Count</span>
-</button>
+                <button id="likeBtn" class="recipe-like-btn @(userLiked ? "liked" : "")">
+                    <i id="heartIcon" class="@(userLiked ? "fa-solid fa-heart" : "fa-regular fa-heart")"></i>
+                    <span>Like</span>
+                    <span id="likeCount">@Model.Likes.Count</span>
+                </button>
 
-<a href="/Recipes/Index">Back to list</a>
+            </div>
+            <div class="recipe-meta-line">
+                <span><i class="fa-solid fa-user"></i> @Model.User?.UserName</span>
+                <span><i class="fa-solid fa-utensils"></i> @Model.Category?.Name</span>
+                <span><i class="fa-solid fa-fire"></i> @Model.Difficulty</span>
+                <span><i class="fa-solid fa-clock"></i> @Model.CookingTime мин</span>
+            </div>
+
+            <p class="recipe-description">@Model.Description</p>
+
+        </div>
+
+    </div>
+    <div class="second-row-wrapper">
+
+    <div class="section-box ingredients-box">
+        <h2 class="section-title">Ingredients</h2>
+        <ul class="ingredients-list">
+            @foreach (var ri in Model.RecipeIngredients)
+            {
+                <li>
+                    <i class="fa-solid fa-circle-check ingredient-icon"></i>
+                    <span class="ingredient-name">@ri.Ingredient.Name</span>
+                    <span class="ingredient-qty">@ri.Quantity</span>
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="section-box steps-box">
+        <h2 class="section-title">Steps</h2>
+        <ol class="steps-list">
+            @foreach (var step in Model.Steps.OrderBy(s => s.StepNumber))
+            {
+                <li>@step.Description</li>
+            }
+        </ol>
+    </div>
+
+    <div class="section-box comments-box">
+        <h2 class="section-title">Comments (@Model.Comments.Count)</h2>
+
+        @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreatedAt))
+        {
+            <div class="comment-item">
+                <div class="comment-header">
+
+                    <img src="https://ui-avatars.com/api/?name=@comment.User.UserName&background=EB9788&color=ffffff&size=64"
+                         class="comment-avatar" />
+
+                    <span class="comment-user">@comment.User.UserName</span>
+                    <span class="comment-date">@comment.CreatedAt.ToShortDateString()</span>
+                </div>
+
+                <p class="comment-text">@comment.Content</p>
+            </div>
+        }
+    </div>
+    </div>  
+    
+    <div class="gallery-box section-box">
+        <h2 class="section-title gallery-title">
+            <i class="fa-solid fa-images gallery-icon"></i>
+            Gallery
+        </h2>
+
+        <div class="gallery-top-line"></div>
+
+        <div class="gallery-row">
+            @foreach (var img in Model.GalleryImages)
+            {
+                <img src="@img.ImagePath" alt="Recipe image" class="gallery-img" />
+            }
+        </div>
+
+        <div class="gallery-bottom-line"></div>
+    </div>
+    
+    <div class="add-comment-box section-box">
+        <h2 class="section-title comment-title">
+            <i class="fa-solid fa-comment-dots comment-icon"></i>
+            Add a Comment
+        </h2>
+
+        <form asp-action="AddComment" method="post">
+            <input type="hidden" name="recipeId" value="@Model.Id" />
+
+            <textarea name="text" class="comment-textarea" placeholder="Write your comment here..."></textarea>
+
+            <button type="submit" class="comment-submit-btn">
+                <i class="fa-solid fa-paper-plane"></i> Submit
+            </button>
+        </form>
+    </div>
+    
+    <div class="back-btn-wrapper">
+        <a asp-action="Index" class="back-btn">
+            <i class="fa-solid fa-arrow-left"></i>
+            Back to list
+        </a>
+    </div>
+
+</div>
 
 <script>
     const likeBtn = document.getElementById("likeBtn");
@@ -65,13 +152,13 @@
             const heart = document.getElementById("heartIcon");
 
             if (data.liked) {
-                heart.textContent = "❤️";
-                likeBtn.classList.remove("btn-outline-danger");
-                likeBtn.classList.add("btn-danger");
+                heart.classList.remove("fa-regular");
+                heart.classList.add("fa-solid");
+                likeBtn.classList.add("liked");
             } else {
-                heart.textContent = "♡";
-                likeBtn.classList.remove("btn-danger");
-                likeBtn.classList.add("btn-outline-danger");
+                heart.classList.remove("fa-solid");
+                heart.classList.add("fa-regular");
+                likeBtn.classList.remove("liked");
             }
         });
     });

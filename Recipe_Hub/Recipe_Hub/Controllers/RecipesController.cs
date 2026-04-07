@@ -76,10 +76,13 @@ public class RecipesController : Controller
     public async Task<IActionResult> Details(int id)
     {
         var recipe = await _context.Recipes
+            .Include(r => r.User)
             .Include(r => r.Category)
             .Include(r => r.RecipeIngredients).ThenInclude(ri => ri.Ingredient)
             .Include(r => r.Steps)
             .Include(r => r.Likes)
+            .Include(r => r.Comments).ThenInclude(c => c.User)
+            .Include(r => r.GalleryImages)
             .FirstOrDefaultAsync(r => r.Id == id);
         
         if (recipe == null)

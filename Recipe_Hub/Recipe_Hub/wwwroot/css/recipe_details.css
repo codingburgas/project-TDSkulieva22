@@ -1,0 +1,507 @@
+﻿.recipe-details-page {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 30px 20px;
+    font-family: "Segoe UI", sans-serif;
+}
+
+.recipe-main-box {
+    display: flex;
+    gap: 25px;
+    background: #ffffff;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 6px 16px #4f4338;
+    margin: 5px auto 40px auto;
+    max-width: 1350px;
+    position: relative;
+    overflow: visible;
+}
+
+.recipe-main-box::before {
+    content: "";
+    position: absolute;
+    top: -22px;
+    left: 50%;
+    transform: translateX(-50%) rotate(-4deg);
+    width: 150px;
+    height: 40px;
+    background: linear-gradient(35deg, #FFF2E5, #FFD5AB, #FFF2E5);
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    clip-path: polygon(
+            0% 10%, 5% 0%, 10% 10%, 15% 0%, 20% 10%, 25% 0%, 30% 10%, 35% 0%,
+            40% 10%, 45% 0%, 50% 10%, 55% 0%, 60% 10%, 65% 0%, 70% 10%, 75% 0%,
+            80% 10%, 85% 0%, 90% 10%, 95% 0%, 100% 10%,
+            100% 90%, 95% 100%, 90% 90%, 85% 100%, 80% 90%, 75% 100%, 70% 90%,
+            65% 100%, 60% 90%, 55% 100%, 50% 90%, 45% 100%, 40% 90%, 35% 100%,
+            30% 90%, 25% 100%, 20% 90%, 15% 100%, 10% 90%, 5% 100%, 0% 90%
+    );
+}
+
+.recipe-main-img {
+    width: 400px;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 14px;
+}
+
+.recipe-main-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.recipe-title {
+    font-size: 44px;
+    font-weight: 700;
+    margin: 0;
+    color: #B7472A;
+    font-family: 'Playfair Display', serif;
+}
+
+.title-subrow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.recipe-date {
+    font-size: 16px;
+    color: #777;
+    display: flex;
+    gap: 6px;
+}
+
+.recipe-like-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    border: 2px dotted #B7472A;
+    color: #B7472A;
+    padding: 6px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.recipe-like-btn:hover,
+.recipe-like-btn.liked {
+    background: #B7472A;
+    color: white;
+}
+
+.recipe-meta-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px;
+    font-size: 19px;
+    color: #444;
+}
+
+.recipe-meta-line i {
+    color: #EB9788;
+    font-size: 21px;
+}
+
+.recipe-description {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+}
+
+.second-row-wrapper {
+    display: flex;
+    gap: 25px;
+    max-width: 1350px;
+    margin: 40px auto;
+    align-items: stretch;
+}
+
+.section-box {
+    flex: 1;
+    background: linear-gradient(to bottom, #FFF2E5, #FFF2E5, #FFD5AB);
+    border-radius: 16px;
+    padding: 22px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    border: 1px solid #f0f0f0;
+    min-height: 260px;
+    position: relative;
+    animation: popIn 0.6s ease-out;
+    font-family: 'Quicksand', sans-serif;
+    border: 3px dotted #B7472A;
+}
+
+.section-title {
+    font-size: 26px;
+    font-weight: 700;
+    margin: 0 0 14px 0;
+    color: #B7472A;
+    font-family: 'Playfair Display', serif;
+}
+
+.ingredients-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.ingredients-list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 17px;
+    color: #444;
+}
+
+.ingredient-icon {
+    color: #EB9788;
+    font-size: 18px;
+}
+
+.ingredient-name {
+    flex: 1;
+    font-weight: 600;
+}
+
+.ingredient-qty {
+    font-weight: 600;
+    color: #B7472A;
+}
+
+.steps-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    counter-reset: step-counter;
+}
+
+.steps-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 14px;
+    font-size: 17px;
+    color: #444;
+    font-family: 'Quicksand', sans-serif;
+}
+
+.steps-list li::before {
+    counter-increment: step-counter;
+    content: counter(step-counter);
+    width: 32px;
+    height: 32px;
+    background: #FFD5AB;
+    border: 2px solid #B7472A;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    color: #B7472A;
+    font-size: 17px;
+}
+
+.ingredients-box::before,
+.steps-box::before,
+.comments-box::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+}
+
+.ingredients-box::before { background: #B7472A; border: 2px solid #8f2f1a; }
+.steps-box::before       { background: #FFD5AB; border: 2px solid #e6b88c; }
+.comments-box::before    { background: #EB9788; border: 2px solid #d86f5f; }
+
+.ingredients-box::after,
+.steps-box::after,
+.comments-box::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 18px;
+    background: linear-gradient(to bottom, #999, #666, #444);
+    border-radius: 2px;
+}
+
+.comments-box .comment-item {
+    background: #f7f7f7;
+    border-radius: 12px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.comment-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.comment-user {
+    font-weight: 600;
+    color: #333;
+}
+
+.comment-date {
+    margin-left: auto;
+    font-size: 13px;
+    color: #888;
+}
+
+.comment-text {
+    margin-top: 6px;
+    font-size: 15px;
+    color: #444;
+}
+
+.gallery-box {
+    margin-top: 30px;
+    padding: 22px;
+    background: linear-gradient(135deg, #F3EFE5FF 0%, #FFF2E5 50%);
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    border: 1px solid #f0f0f0;
+    position: relative;
+    animation: popIn 0.6s ease-out;
+}
+
+.gallery-box::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    background: #EB9788;
+    border: 2px solid #d86f5f;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+}
+
+.gallery-box::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 18px;
+    background: linear-gradient(to bottom, #999, #666, #444);
+    border-radius: 2px;
+}
+
+.gallery-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #B7472A;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.gallery-icon {
+    color: #EB9788;
+    font-size: 24px;
+}
+
+.gallery-top-line,
+.gallery-bottom-line {
+    width: 100%;
+    height: 3px;
+    background: #FFD5AB;
+    border-radius: 2px;
+    margin: 10px 0 20px 0;
+}
+
+.gallery-row {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+.gallery-img {
+    width: 220px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.gallery-img:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+}
+
+.add-comment-box {
+    margin-top: 35px;
+    padding: 22px;
+    background: linear-gradient(135deg, #FFF2E5 0%, #EB9788 100%);
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.12);
+    border: 1px solid #f0d6c8;
+    position: relative;
+    animation: popIn 0.6s ease-out;
+}
+
+.add-comment-box::before {
+    content: "";
+    position: absolute;
+    top: -18px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 22px;
+    height: 22px;
+    background: #FFD5AB;
+    border: 2px solid #e6b88c;
+    border-radius: 50%;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.25);
+}
+
+.add-comment-box::after {
+    content: "";
+    position: absolute;
+    top: 2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 18px;
+    background: linear-gradient(to bottom, #999, #666, #444);
+    border-radius: 2px;
+}
+
+.comment-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #B7472A;
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.comment-icon {
+    color: #EB9788;
+    font-size: 24px;
+}
+
+.comment-textarea {
+    width: 100%;
+    height: 120px;
+    border-radius: 12px;
+    border: 2px solid #FFD5AB;
+    padding: 12px;
+    font-size: 16px;
+    font-family: 'Quicksand', sans-serif;
+    resize: vertical;
+    outline: none;
+    transition: 0.2s;
+}
+
+.comment-textarea:focus {
+    border-color: #EB9788;
+    box-shadow: 0 0 6px rgba(235, 151, 136, 0.4);
+}
+
+.comment-submit-btn {
+    margin-top: 14px;
+    background: #B7472A;
+    color: white;
+    border: none;
+    padding: 10px 22px;
+    border-radius: 30px;
+    font-size: 16px;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+
+.comment-submit-btn:hover {
+    background: #8f2f1a;
+}
+
+.back-btn-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+.back-btn {
+    background: linear-gradient(180deg, #FFF2E5 0%, #FFD5AB 100%);
+    color: #5a2a1e;
+    padding: 12px 26px;
+    border-radius: 30px;
+    font-size: 17px;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid #e6b8a0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    transition: 0.25s ease;
+}
+
+.back-btn i {
+    font-size: 18px;
+}
+
+.back-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+    background: linear-gradient(180deg, #FFD5AB 0%, #B7472A 100%);
+    color: #4a1f16;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to   { opacity: 1; transform: scale(1); }
+}
+
+@media (max-width: 900px) {
+    .recipe-main-box {
+        flex-direction: column;
+    }
+    .second-row-wrapper {
+        flex-direction: column;
+    }
+    .recipe-main-img {
+        width: 100%;
+        height: 220px;
+    }
+}
