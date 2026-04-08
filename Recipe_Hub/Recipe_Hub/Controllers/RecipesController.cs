@@ -382,6 +382,36 @@ public class RecipesController : Controller
         return Json(new { likes = recipe.Likes.Count, liked });
     }
     
+    [Authorize]
+    [HttpPost]
+    public async Task<IActionResult> AddComment(int recipeId, string text)
+    {
+        if (string.IsNullOrWhiteSpace(text))
+        {
+            return RedirectToAction("Details", new { id = recipeId });
+        }
+
+        var userId = _userManager.GetUserId(User);
+
+        if (userId == null)
+        {
+            return Unauthorized();
+        }
+
+        var comment = new Comment
+        {
+            Content = text,
+            RecipeId = recipeId,
+            UserId = userId,
+            CreatedAt = DateTime.UtcNow
+        };
+
+        _context.Comments.Add(comment);
+        await _context.SaveChangesAsync();
+
+        return RedirectToAction("Details", new { id = recipeId });
+    }
+    
     [HttpPost]
     public IActionResult Delete(int id)
     {
