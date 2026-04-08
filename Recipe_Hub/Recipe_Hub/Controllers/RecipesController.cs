@@ -25,7 +25,7 @@ public class RecipesController : Controller
         _env = env;
     }
 
-    public async Task<IActionResult> Index(string category, string time, string difficulty, string search)
+    public async Task<IActionResult> Index(string category, string time, string difficulty, string search, string sort)
     {
         ViewData["BodyClass"] = "recipes-page";
         
@@ -70,7 +70,21 @@ public class RecipesController : Controller
             );
         }
 
-        return View(recipes.ToList());
+        if (!string.IsNullOrEmpty(sort))
+        {
+            switch (sort)
+            {
+                case "newest":
+                    recipes = recipes.OrderByDescending(r => r.CreatedAt);
+                    break;
+
+                case "likes":
+                    recipes = recipes.OrderByDescending(r => r.Likes.Count);
+                    break;
+            }
+        }
+
+        return View(await recipes.ToListAsync());
     }
 
     public async Task<IActionResult> Details(int id)

@@ -219,3 +219,47 @@ body {
     background-color: #B7472A;
 }
 
+.sort-tabs {
+    margin-top: -10px;
+    padding-right: 40px;
+}
+
+.sort-tab {
+    background: #fff;
+    border: 1px solid #EB9788;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-size: 15px;
+    color: #B7472A;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+.sort-tab:hover {
+    background: #FFE6D6;
+}
+
+.sort-tab.active {
+    background: #EB9788;
+    color: white;
+    border-color: #EB9788;
+    box-shadow: 0 0 6px rgba(235, 151, 136, 0.4);
+}
+
+.sort-label-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.sort-icon {
+    font-size: 18px;
+    color: #B7472A;
+}
+
+.sort-text {
+    font-size: 16px;
+    color: #4f4338;
+    font-weight: 600;
+}

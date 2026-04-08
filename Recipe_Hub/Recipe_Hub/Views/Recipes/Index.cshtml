@@ -33,6 +33,28 @@
 
 </form>
 
+<div class="sort-tabs d-flex mb-4">
+
+    <form method="get" asp-action="Index" class="d-flex gap-2 align-items-center justify-content-end w-100">
+
+        <div class="sort-label-wrapper d-flex align-items-center">
+            <i class="fa-solid fa-arrow-up-wide-short sort-icon"></i>
+            <span class="sort-text">Sort:</span>
+        </div>
+
+        <button name="sort" value="newest"
+                class="sort-tab @(Context.Request.Query["sort"] == "newest" ? "active" : "")">
+            Newest
+        </button>
+
+        <button name="sort" value="likes"
+                class="sort-tab @(Context.Request.Query["sort"] == "likes" ? "active" : "")">
+            Most liked
+        </button>
+
+    </form>
+</div>
+
 <div class="container">
 
     <div class="row g-4">
