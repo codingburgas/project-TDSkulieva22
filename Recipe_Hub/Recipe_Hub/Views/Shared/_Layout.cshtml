@@ -91,10 +91,64 @@
     @RenderBody()
 </main>
 
+<footer class="site-footer">
+    <div class="footer-container">
 
-<footer class="border-top footer text-muted">
-    <div class="container">
-        &copy; 2026 - Recipe_Hub - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        <div class="footer-section footer-about">
+            <img src="/Resources/Images/logo.png" class="footer-logo" alt="Logo" />
+            <p class="footer-about-text">
+                Chef’s Network is a social cooking platform where food lovers and professionals
+                share recipes, discover new ideas, and inspire each other every day.
+            </p>
+
+            <div class="footer-about-icons">
+                <i class="fa-solid fa-utensils"></i>
+                <i class="fa-solid fa-seedling"></i>
+                <i class="fa-solid fa-fire-burner"></i>
+            </div>
+        </div>
+
+        <div class="footer-section">
+            <h4><i class="fa-solid fa-compass"></i> Quick Links</h4>
+            <ul class="footer-links">
+                <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                <li><a asp-controller="Recipes" asp-action="Index">Recipes</a></li>
+                <li><a asp-controller="Recipes" asp-action="Create">Create Recipe</a></li>
+                <li><a asp-controller="Account" asp-action="Login">Login</a></li>
+                <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section">
+            <h4><i class="fa-solid fa-chart-simple"></i> Explore</h4>
+            <ul class="footer-links">
+                <li><a asp-controller="Statistics" asp-action="Index" asp-route-section="top">Top 3 Most Liked Recipes</a></li>
+                <li><a asp-controller="Statistics" asp-action="Index" asp-route-section="users">Most Active Users</a></li>
+                <li><a asp-controller="Statistics" asp-action="Index" asp-route-section="categories">Popular Categories</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-section footer-feedback">
+            <h4><i class="fa-solid fa-envelope"></i> Feedback</h4>
+
+            <form method="post" asp-controller="Home" asp-action="SendFeedback" class="footer-feedback-form">
+                <textarea name="message" placeholder="Your message..." required></textarea>
+                <button type="submit"><i class="fa-solid fa-paper-plane"></i> Send</button>
+            </form>
+
+            <h4 class="footer-social-title"><i class="fa-solid fa-mobile-screen"></i> Connect With Us</h4>
+            <div class="footer-socials">
+                <a href="#"><i class="fa-brands fa-facebook"></i></a>
+                <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                <a href="#"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+        <p>© @DateTime.Now.Year Chef’s Network — All rights reserved.</p>
     </div>
 </footer>
 

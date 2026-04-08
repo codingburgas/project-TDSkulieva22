@@ -1,12 +1,21 @@
 ﻿@model Recipe_Hub.Models.ViewModels.StatisticsViewModel
 
 <div class="stats-wrapper">
-    <h1 class="page-main-title">Platform Statistics</h1>
+    <div class="stats-title-wrapper">
+        <span class="line"></span>
+
+        <h1 class="page-main-title">
+            <i class="fa-solid fa-chart-pie stats-icon"></i>
+            Platform Statistics
+        </h1>
+
+        <span class="line"></span>
+    </div>
     
     <section class="stats-section">
         <div class="recipes-container">
             <h2 class="section-heading">Top 3 Recipes of the Month</h2>
-
+            <hr/>
             <div class="recipes-grid">
                 @foreach (var recipe in Model.TopRecipes)
                 {
@@ -30,6 +39,7 @@
                     </div>
                 }
             </div>
+            <hr/>
         </div>
     </section>
 
@@ -97,9 +107,4 @@
 
         </div>
     </section>
-    
-    <div class="stats-footer">
-        <a class="stats-button">See More Recipes</a>
-    </div>
-
 </div>

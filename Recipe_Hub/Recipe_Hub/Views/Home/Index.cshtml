@@ -74,6 +74,13 @@
     </div>
 </section>
 
+@if (TempData["FeedbackSent"] != null)
+{
+    <div class="alert alert-success">
+        @TempData["FeedbackSent"]
+    </div>
+}
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
     const titles = document.querySelectorAll("h2.fw-bold");
