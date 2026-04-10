@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8"/>
@@ -70,16 +74,24 @@
                         </a>
 
                         <ul class="dropdown-menu dropdown-menu-end">
-                            <li><a class="dropdown-item" asp-controller="Profile" asp-action="Index">Profile</a></li>
-                            <li><a class="dropdown-item" asp-controller="Account" asp-action="Logout">Logout</a></li>
+                            <li>
+                                <form asp-area="Identity"
+                                      asp-page="/Account/Logout"
+                                      asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })"
+                                      class="m-0 p-0">
+
+                                    <button type="submit" class="dropdown-item">
+                                        Logout
+                                    </button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
                 }
                 else
                 {
-                    <a asp-controller="Account" asp-action="Login" class="btn login-btn ms-3">
-                        Login / Register
-                    </a>
+                  <a class="btn login-btn ms-3" asp-area="Identity" asp-page="/Account/Login"> Login / Register </a>
+                    
                 }
 
             </div>
@@ -114,8 +126,8 @@
                 <li><a asp-controller="Home" asp-action="Index">Home</a></li>
                 <li><a asp-controller="Recipes" asp-action="Index">Recipes</a></li>
                 <li><a asp-controller="Recipes" asp-action="Create">Create Recipe</a></li>
-                <li><a asp-controller="Account" asp-action="Login">Login</a></li>
-                <li><a asp-controller="Account" asp-action="Register">Register</a></li>
+                <li><a asp-area="Identity" asp-page="/Account/Login"> Login</a></li>
+                <li><a asp-area="Identity" asp-page="/Account/Register"> Register</a></li>
             </ul>
         </div>
 
