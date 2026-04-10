@@ -97,8 +97,27 @@
         @foreach (var comment in Model.Comments.OrderByDescending(c => c.CreatedAt))
         {
             <div class="comment-item">
-                <div class="comment-header">
 
+                @{
+                    var isCommentOwner = comment.UserId == userId;
+                    var isCommentAdmin = User.IsInRole("Admin");
+                }
+
+                @if (isCommentOwner || isCommentAdmin)
+                {
+                    <form method="post"
+                          asp-controller="Comment"
+                          asp-action="Delete"
+                          asp-route-id="@comment.Id"
+                          class="comment-delete-form">
+
+                        <button type="submit" class="comment-delete-btn">
+                            <i class="fa-solid fa-trash"></i>
+                        </button>
+                    </form>
+                }
+
+                <div class="comment-header">
                     <img src="https://ui-avatars.com/api/?name=@comment.User.UserName&background=EB9788&color=ffffff&size=64"
                          class="comment-avatar" />
 

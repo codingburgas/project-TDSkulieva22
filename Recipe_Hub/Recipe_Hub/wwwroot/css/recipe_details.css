@@ -245,6 +245,14 @@
     margin-bottom: 12px;
 }
 
+.comment-item {
+    position: relative;
+    padding: 15px;
+    border-radius: 10px;
+    background: #fff7f3;
+    margin-bottom: 15px;
+}
+
 .comment-header {
     display: flex;
     align-items: center;
@@ -490,13 +498,15 @@
     gap: 12px;
 }
 
-.edit-delete-inline {
+.edit-delete-inline,
+.comment-delete-btn{
     display: flex;
     gap: 10px;
 }
 
 .edit-btn-inline,
-.delete-btn-inline {
+.delete-btn-inline,
+.comment-delete-btn{
     width: 38px;
     height: 38px;
     border-radius: 50%;
@@ -522,13 +532,15 @@
 }
 
 /* DELETE BUTTON */
-.delete-btn-inline {
+.delete-btn-inline,
+.comment-delete-btn{
     background: linear-gradient(180deg, #ffb3b3 0%, #ff6b6b 100%);
     color: #4a1f16;
     border: 2px solid #e68a8a;
 }
 
-.delete-btn-inline:hover {
+.delete-btn-inline:hover,
+.comment-delete-btn:hover{
     background: linear-gradient(180deg, #ff6b6b 0%, #b30000 100%);
     color: white;
     transform: translateY(-2px);
