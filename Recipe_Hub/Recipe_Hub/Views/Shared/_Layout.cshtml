@@ -5,17 +5,24 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic metadata -->
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    
+    <!-- Dynamic page title -->
     <title>@ViewData["Title"] - Recipe_Hub</title>
+    
+    <!-- CSS files -->
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/Recipe_Hub.styles.css" asp-append-version="true"/>
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true"/>
-    <link rel="stylesheet" href="~/css/recipes.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/statistics.css" />
-    <link rel="stylesheet" href="~/css/add_recipe.css" />
-    <link rel="stylesheet" href="~/css/recipe_details.css" />
+    <link rel="stylesheet" href="~/css/recipes.css" asp-append-version="true"/>
+    <link rel="stylesheet" href="~/css/statistics.css"/>
+    <link rel="stylesheet" href="~/css/add_recipe.css"/>
+    <link rel="stylesheet" href="~/css/recipe_details.css"/>
+    
+    <!-- External icon libraries -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 </head>
@@ -26,15 +33,18 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-white custom-nav shadow-nav">
         <div class="container d-flex justify-content-between align-items-center">
 
+            <!-- Logo + brand -->
             <a class="navbar-brand d-flex align-items-center ms-auto" asp-controller="Home" asp-action="Index">
                 <img src="~/Resources/Images/logo.png" class="nav-logo" alt="Logo">
                 <span class="brand-text ms-2">Dishlly</span>
             </a>
 
+            <!-- Mobile menu toggle -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Navigation links -->
             <div class="collapse navbar-collapse justify-content-end" id="mainNav">
 
                 <ul class="navbar-nav align-items-center me-3">
@@ -68,6 +78,7 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="dropdown">
+                        <!-- Extract first letter of username for avatar -->
                         @{
                             var username = User.Identity.Name;
                             var initial = !string.IsNullOrEmpty(username) ? username[0].ToString().ToUpper() : "?";
@@ -77,7 +88,8 @@
                             <div class="profile-initial">@initial</div>
                             <span class="profile-name">@username</span>
                         </a>
-                        
+
+                        <!-- Dropdown menu -->
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <form asp-area="Identity"
@@ -94,9 +106,9 @@
                     </div>
                 }
                 else
-                {
+                { 
+                    <!-- Login/Register button -->
                   <a class="btn login-btn ms-3" asp-area="Identity" asp-page="/Account/Login"> Login / Register </a>
-                    
                 }
 
             </div>
@@ -105,12 +117,13 @@
 </header>
 
 <main role="main">
-    @RenderBody()
+    @RenderBody()  <!-- Render the content of each page -->
 </main>
 
 <footer class="site-footer">
     <div class="footer-container">
 
+        <!-- About section -->
         <div class="footer-section footer-about">
             <img src="/Resources/Images/logo.png" class="footer-logo" alt="Logo" />
             <p class="footer-about-text">
@@ -125,6 +138,7 @@
             </div>
         </div>
 
+        <!-- Quick Links -->
         <div class="footer-section">
             <h4><i class="fa-solid fa-compass"></i> Quick Links</h4>
             <ul class="footer-links">
@@ -136,6 +150,7 @@
             </ul>
         </div>
 
+        <!-- Explore section -->
         <div class="footer-section">
             <h4><i class="fa-solid fa-chart-simple"></i> Explore</h4>
             <ul class="footer-links">
@@ -145,6 +160,7 @@
             </ul>
         </div>
 
+        <!-- Feedback section -->
         <div class="footer-section footer-feedback">
             <h4><i class="fa-solid fa-envelope"></i> Feedback</h4>
 
@@ -176,6 +192,7 @@
 @await RenderSectionAsync("Scripts", required: false)
 
 <script>
+    //Adjust hero section height based on navbar height
     function fixHeroHeight() {
         const nav = document.querySelector("header nav");
         const hero = document.querySelector(".video-hero");

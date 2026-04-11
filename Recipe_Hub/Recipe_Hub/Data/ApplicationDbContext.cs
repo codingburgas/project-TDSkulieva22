@@ -11,6 +11,7 @@ public class ApplicationDbContext : IdentityDbContext
     {
     }
     
+    //Database tables
     public DbSet<Category> Categories { get; set; }
     public DbSet<Recipe> Recipes { get; set; }
     public DbSet<Ingredient> Ingredients { get; set; }
@@ -27,7 +28,7 @@ public class ApplicationDbContext : IdentityDbContext
             .Property(r => r.MainImagePath)
             .HasDefaultValue("/Resources/Images/default.png");
 
-        // Many-to-Many Recipe -> Ingredient
+        //Many-to-Many Recipe -> Ingredient
         builder.Entity<RecipeIngredient>()
             .HasKey(ri => ri.Id);
 
@@ -35,7 +36,7 @@ public class ApplicationDbContext : IdentityDbContext
             .HasOne(ri => ri.Recipe)
             .WithMany(r => r.RecipeIngredients)
             .HasForeignKey(ri => ri.RecipeId)
-            .OnDelete(DeleteBehavior.Restrict);
+            .OnDelete(DeleteBehavior.Restrict); //Prevent cascade delete
 
         builder.Entity<RecipeIngredient>()
             .HasOne(ri => ri.Ingredient)
@@ -43,12 +44,14 @@ public class ApplicationDbContext : IdentityDbContext
             .HasForeignKey(ri => ri.IngredientId)
             .OnDelete(DeleteBehavior.Restrict);
         
+        //One-to-Many: Recipe -> Comments
         builder.Entity<Comment>()
             .HasOne(c => c.Recipe)
             .WithMany(r => r.Comments)
             .HasForeignKey(c => c.RecipeId)
             .OnDelete(DeleteBehavior.Restrict);
         
+        //One-to-Many: Recipe -> Likes
         builder.Entity<Like>()
             .HasOne(l => l.Recipe)
             .WithMany(r => r.Likes)

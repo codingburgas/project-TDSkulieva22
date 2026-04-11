@@ -21,15 +21,14 @@ namespace Recipe_Hub.Models
         public int CookingTime { get; set; }
 
         public DifficultyLevel Difficulty { get; set; }
-
-        // FK към Category
+        
         public int CategoryId { get; set; }
         public Category Category { get; set; }
 
-        // FK към User (IdentityUser)
         public string UserId { get; set; }
-        public IdentityUser User { get; set; }
+        public IdentityUser User { get; set; }  //Navigation to the user
 
+        //Path to the main recipe image
         public string MainImagePath { get; set; } = "/Resources/Images/default.png";
         
         // Navigation properties

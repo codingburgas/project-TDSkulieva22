@@ -5,6 +5,7 @@
 
 <form method="get" asp-action="Index" class="recipe-filters">
 
+    <!-- Category filter -->
     <select name="category" class="filter-select">
         <option value="">Category</option>
         @foreach (var cat in ViewBag.Categories)
@@ -13,6 +14,7 @@
         }
     </select>
 
+    <!-- Cooking time filter -->
     <select name="time" class="filter-select">
         <option value="">Cooking Time</option>
         <option value="15">Under 15 min</option>
@@ -20,6 +22,7 @@
         <option value="60">Under 60 min</option>
     </select>
 
+    <!-- Difficulty filter -->
     <select name="difficulty" class="filter-select">
         <option value="">Difficulty</option>
         <option value="Easy">Easy</option>
@@ -27,8 +30,10 @@
         <option value="Hard">Hard</option>
     </select>
 
+    <!-- Search by recipe title -->
     <input type="text" name="search" class="filter-search" placeholder="Search by name..." />
 
+    <!-- Submit filters -->
     <button type="submit" class="filter-btn">Search</button>
 
 </form>
@@ -37,16 +42,19 @@
 
     <form method="get" asp-action="Index" class="d-flex gap-2 align-items-center justify-content-end w-100">
 
+        <!-- Sort label -->
         <div class="sort-label-wrapper d-flex align-items-center">
             <i class="fa-solid fa-arrow-up-wide-short sort-icon"></i>
             <span class="sort-text">Sort:</span>
         </div>
 
+        <!-- Sort by newest -->
         <button name="sort" value="newest"
                 class="sort-tab @(Context.Request.Query["sort"] == "newest" ? "active" : "")">
             Newest
         </button>
 
+        <!-- Sort by most liked -->
         <button name="sort" value="likes"
                 class="sort-tab @(Context.Request.Query["sort"] == "likes" ? "active" : "")">
             Most liked
@@ -63,6 +71,7 @@
             <div class="col-md-4">
                 <div class="recipe-card shadow-sm">
 
+                    <!-- Recipe image -->
                     <div class="recipe-img-wrapper">
                         <img src="@recipe.MainImagePath" class="recipe-img" alt="@recipe.Title" />
                     </div>
@@ -71,8 +80,10 @@
 
                         <h4 class="recipe-title">@recipe.Title</h4>
 
+                        <!-- Author -->
                         <p class="recipe-author">by @recipe.User?.UserName</p>
 
+                        <!-- Cooking time + difficulty + likes -->
                         <div class="recipe-info-row d-flex justify-content-between align-items-center mt-3">
 
                             <div class="left-info d-flex align-items-center gap-3">
@@ -86,6 +97,7 @@
 
                         </div>
                         
+                        <!-- View details button -->
                         <a href="/Recipes/Details/@recipe.Id" class="btn view-btn w-100 mt-3">
                             View Recipe
                         </a>
@@ -107,10 +119,12 @@
 <script>
 document.addEventListener("DOMContentLoaded", () => {
 
+    //Elements to animate when they enter the viewport
     const title = document.querySelector(".recipes-page-title");
     const subtitle = document.querySelector(".recipes-subtitle");
     const cta = document.querySelector(".recipes-cta-section");
 
+    //IntersectionObserver triggers animations when elements become visible
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
 
@@ -130,6 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
+    //Observe the animated elements
     observer.observe(title);
     observer.observe(subtitle);
     observer.observe(cta);

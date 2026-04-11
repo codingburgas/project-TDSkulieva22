@@ -1,7 +1,9 @@
 ﻿@model Recipe_Hub.Models.ViewModels.CreateRecipeViewModel
 @{
-    Layout = "_Layout";
+    Layout = "_Layout";  //Use the main site layout
 }
+
+<!-- Display error message from TempData -->
 @if (TempData["Error"] != null)
 {
     <div class="alert alert-danger">
@@ -11,6 +13,7 @@
 <div class="recipe-form-container">
     <h2 class="form-title">Create Recipe</h2>
 
+    <!-- Main recipe creation form -->
     <form asp-action="Create" method="post" enctype="multipart/form-data">
         <div class="row gx-4 gy-4 first-row">
             <div class="col-lg-4">
@@ -22,6 +25,7 @@
 
                     <div class="card-body">
 
+                        <!-- Title + Cooking Time -->
                         <div class="form-row-2">
                             <div class="form-group">
                                 <label asp-for="Title"></label>
@@ -33,7 +37,8 @@
                                 <input asp-for="CookingTime" class="form-control" placeholder="Minutes" />
                             </div>
                         </div>
-
+                        
+                        <!-- Category + Difficulty -->
                         <div class="form-row-2">
                             <div class="form-group">
                                 <label asp-for="CategoryId"></label>
@@ -52,6 +57,7 @@
                             </div>
                         </div>
 
+                        <!-- Description -->
                         <div class="form-group mt-3">
                             <label asp-for="Description"></label>
                             <textarea asp-for="Description" class="form-control" rows="3"></textarea>
@@ -70,6 +76,7 @@
 
                     <div class="card-body">
 
+                        <!-- Dynamic ingredient rows -->
                         <div id="ingredients-container">
                             <div class="ingredient-row d-flex flex-wrap gap-2 mb-2">
                                 <select name="IngredientIds[0]" class="form-select flex-grow-1" asp-items="Model.Ingredients"></select>
@@ -78,6 +85,7 @@
                             </div>
                         </div>
 
+                        <!-- Add new ingredient row -->
                         <button type="button" id="add-ingredient" class="btn add-ingredient-btn">+ Add Ingredient</button>
 
                     </div>
@@ -92,7 +100,8 @@
                     </div>
 
                     <div class="card-body">
-
+                        
+                        <!-- Dynamic step rows -->
                         <div id="steps-container">
                             <div class="step-row mb-3">
                                 <textarea name="Steps[0]" class="form-control" rows="3" placeholder="Describe step..."></textarea>
@@ -100,6 +109,7 @@
                             </div>
                         </div>
 
+                        <!-- Add new step row -->
                         <button type="button" id="add-step" class="btn add-step-btn">+ Add Step</button>
 
                     </div>
@@ -119,11 +129,13 @@
 
                     <div class="card-body">
 
+                        <!-- Main image upload -->
                         <div class="form-group mb-3">
                             <label>Main Image</label>
                             <input type="file" name="MainImage" class="form-control" />
                         </div>
 
+                        <!-- Gallery images upload -->
                         <div class="form-group mb-3">
                             <label>Gallery Images</label>
                             <input type="file" name="GalleryImages" class="form-control" multiple />
@@ -146,6 +158,7 @@
 
 @section Scripts {
     <script>
+        //Add new ingredient row
         document.getElementById("add-ingredient").addEventListener("click", function () {
             const container = document.getElementById("ingredients-container");
             const index = container.children.length;
@@ -153,6 +166,7 @@
             const row = document.createElement("div");
             row.className = "ingredient-row d-flex flex-wrap gap-2 mb-2";
 
+            //Copy first ingredient dropdown options
             row.innerHTML = `
                 <select name="IngredientIds[${index}]" class="form-select flex-grow-1">
                     ${document.querySelector("select[name='IngredientIds[0]']").innerHTML}
@@ -164,13 +178,14 @@
             container.appendChild(row);
         });
 
+        //Remove ingredient row
         document.addEventListener("click", function (e) {
             if (e.target.classList.contains("remove-ingredient")) {
                 e.target.closest(".ingredient-row").remove();
             }
         });
 
-        // STEPS
+        //Add new step row
         document.getElementById("add-step").addEventListener("click", function () {
             const container = document.getElementById("steps-container");
             const index = container.children.length;
@@ -186,6 +201,7 @@
             container.appendChild(row);
         });
 
+        //Remove step row
         document.addEventListener("click", function (e) {
             if (e.target.classList.contains("remove-step")) {
                 e.target.closest(".step-row").remove();

@@ -1,6 +1,8 @@
 ﻿@model Recipe_Hub.Models.ViewModels.StatisticsViewModel
 
 <div class="stats-wrapper">
+    
+    <!-- Page title section -->
     <div class="stats-title-wrapper">
         <span class="line"></span>
 
@@ -11,7 +13,8 @@
 
         <span class="line"></span>
     </div>
-    
+
+    <!-- Top 3 Recipes Section -->
     <section class="stats-section">
         <div class="recipes-container">
             <h2 class="section-heading">Top 3 Recipes of the Month</h2>
@@ -20,17 +23,19 @@
                 @foreach (var recipe in Model.TopRecipes)
                 {
                     <div class="recipe-card">
+                        
+                        <!-- Recipe main image -->
                         <img src="@recipe.MainImagePath" class="recipe-img"/>
 
                         <div class="recipe-info">
                             <h3 class="recipe-title">@recipe.Title</h3>
-                            
+
                             <p class="recipe-author">
-                                👤 @recipe.User.UserName  
-                                <span class="recipe-date">@recipe.CreatedAt.ToString("dd MMM yyyy", 
+                                👤 @recipe.User.UserName
+                                <span class="recipe-date">@recipe.CreatedAt.ToString("dd MMM yyyy",
                                                               System.Globalization.CultureInfo.InvariantCulture)</span>
                             </p>
-                            
+
                             <div class="recipe-meta">
                                 <span class="recipe-fans">@recipe.Comments.Count fans</span>
                                 <span class="recipe-likes">❤️ @recipe.Likes.Count</span>
@@ -43,6 +48,7 @@
         </div>
     </section>
 
+    <!-- Most Active Users Section -->
     <section class="stats-section">
         <div class="users-container">
             <h2 class="section-heading">Most Active Users</h2>
@@ -51,18 +57,23 @@
                 @foreach (var user in Model.MostActiveUsers)
                 {
                     <div class="user-row">
-        
+
+                        <!-- User avatar + info -->
                         <div class="user-left">
+                            
+                            <!-- Avatar with first letter of username -->
                             <div class="user-avatar">
-                                @user.UserName.Substring(0,1).ToUpper()
+                                @user.UserName.Substring(0, 1).ToUpper()
                             </div>
 
                             <div class="user-info">
+                                <!-- Username and recipe count -->
                                 <div class="user-header">
                                     <h3 class="user-name">@user.UserName</h3>
                                     <span class="user-recipes">(@user.RecipeCount recipes)</span>
                                 </div>
 
+                                <!-- Likes, comments, top recipe -->
                                 <div class="user-stats-inline">
                                     <span>❤️ @user.TotalLikes likes</span>
                                     <span>💬 @user.TotalComments comments</span>
@@ -71,17 +82,19 @@
                             </div>
                         </div>
 
+                        <!-- Activity score box -->
                         <div class="activity-box">
                             @user.ActivityScore
                         </div>
                     </div>
 
-                    <hr class="user-divider" />
+                    <hr class="user-divider"/>
                 }
             </div>
         </div>
     </section>
 
+    <!-- Category Popularity Section -->
     <section class="stats-section">
         <div class="category-container">
 
@@ -90,12 +103,14 @@
             <div class="category-chart">
                 @foreach (var cat in Model.CategoryPopularity)
                 {
+                    //Calculate percentage for each category
                     var percentage = (int)((double)cat.Value /
                         Model.CategoryPopularity.Sum(x => x.Value) * 100);
 
                     <div class="category-row">
                         <span class="cat-label">@cat.Key</span>
 
+                        <!-- Bar chart -->
                         <div class="cat-bar">
                             <div class="cat-fill" style="width:@percentage%"></div>
                         </div>

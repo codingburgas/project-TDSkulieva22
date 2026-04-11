@@ -5,5 +5,5 @@ public class RecipeImage : BaseEntity
     public int RecipeId { get; set; }
     public string ImagePath { get; set; }
 
-    public Recipe Recipe { get; set; }
+    public Recipe Recipe { get; set; }  //Navigation property to the recipe
 }

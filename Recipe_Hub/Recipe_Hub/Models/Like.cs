@@ -5,8 +5,8 @@ namespace Recipe_Hub.Models;
 public class Like : BaseEntity
 {
     public string UserId { get; set; }
-    public IdentityUser User { get; set; }
+    public IdentityUser User { get; set; }  //Navigation property
 
     public int RecipeId { get; set; }
-    public Recipe Recipe { get; set; }
+    public Recipe Recipe { get; set; }  //Navigation property
 }

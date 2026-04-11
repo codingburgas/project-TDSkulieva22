@@ -7,8 +7,8 @@ public class Comment : BaseEntity
     public string Content { get; set; }
 
     public string UserId { get; set; }
-    public IdentityUser User { get; set; }
+    public IdentityUser User { get; set; }   //Navigation property to the user
 
     public int RecipeId { get; set; }
-    public Recipe Recipe { get; set; }
+    public Recipe Recipe { get; set; }  //Navigation property to the recipe
 }

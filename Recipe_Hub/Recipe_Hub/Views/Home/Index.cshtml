@@ -1,9 +1,11 @@
 ﻿@{
     Layout = "_Layout";
-    ViewData["Title"] = "Home";
-    ViewData["BodyClass"] = "home-page";
+    ViewData["Title"] = "Home"; //Page title
+    ViewData["BodyClass"] = "home-page";  //Add custom body class for styling
 }
 <section class="video-hero">
+    
+    <!-- Autoplay looping background video -->
     <video autoplay muted loop playsinline class="w-100 hero-video">
         <source src="/Resources/videos/hero.mp4" type="video/mp4">
     </video>
@@ -12,9 +14,13 @@
 <br/>
 <section class="py-5">
     <div class="container text-center">
+        
+        <!-- Section title -->
         <h2 class="mb-4 fw-bold">Inspiration for Every Chef</h2>
         <br/>
         <div class="row g-4">
+            
+            <!-- Quote card 1 -->
             <div class="col-md-4">
                 <div class="chef-card quote-card">
                     <span class="quote-icon">“</span>
@@ -23,6 +29,7 @@
                 </div>
             </div>
 
+            <!-- Quote card 2 -->
             <div class="col-md-4">
                 <div class="chef-card quote-card">
                     <span class="quote-icon">“</span>
@@ -31,6 +38,7 @@
                 </div>
             </div>
 
+            <!-- Quote card 3 -->
             <div class="col-md-4">
                 <div class="chef-card quote-card">
                     <span class="quote-icon">“</span>
@@ -44,8 +52,11 @@
 
 <section class="py-5">
     <div class="container text-center">
+        
+        <!-- Section title -->
         <h2 class="mb-4 fw-bold">Quick Cooking Tips</h2>
 
+        <!-- Tips -->
         <div class="row g-4 justify-content-center">
 
             <div class="col-md-4">
@@ -66,6 +77,8 @@
 
 <section class="py-5 text-center cta-section">
     <div class="container">
+        
+        <!-- CTA title + subtitle -->
         <h2 class="fw-bold">Have a recipe to share?</h2>
         <p class="lead">Inspire others with your favorite dish!</p>
         <a asp-controller="Recipes" asp-action="Create" class="btn cta-btn btn-lg px-4">
@@ -76,6 +89,7 @@
 
 @if (TempData["FeedbackSent"] != null)
 {
+    <!-- Success message after sending feedback -->
     <div class="alert alert-success">
         @TempData["FeedbackSent"]
     </div>
@@ -83,8 +97,11 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
+    
+    //Select all bold section titles
     const titles = document.querySelectorAll("h2.fw-bold");
 
+    //Observer triggers animation when titles enter the viewport
     const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
@@ -93,6 +110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }, { threshold: 0.4 });
 
+    //Observe each title
     titles.forEach(title => observer.observe(title));
 });
 </script>

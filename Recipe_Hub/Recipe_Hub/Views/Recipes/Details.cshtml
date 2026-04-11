@@ -2,6 +2,7 @@
 @using System.Security.Claims
 
 @{
+    // Get current logged-in user ID
     var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
     bool userLiked = Model.Likes.Any(l => l.UserId == userId);
 }
@@ -9,6 +10,7 @@
 <div class="recipe-details-page">
     <div class="recipe-main-box">
 
+        <!-- Main recipe image -->
         <img src="@Model.MainImagePath" alt="@Model.Title" class="recipe-main-img" />
 
         <div class="recipe-main-info">
@@ -20,6 +22,7 @@
                 @inject UserManager<IdentityUser> UserManager
 
                 @{
+                    //Determine if current user is the recipe owner or an admin
                     var currentUserId = UserManager.GetUserId(User);
                     bool isOwner = Model.UserId == currentUserId;
                     bool isAdmin = User.IsInRole("Admin");
@@ -28,12 +31,14 @@
                 @if (isOwner || isAdmin)
                 {
                     <div class="edit-delete-inline">
+                        <!-- Edit button -->
                         <a asp-action="Edit" asp-route-id="@Model.Id" class="edit-btn-inline">
                             <i class="fa-solid fa-pen-to-square"></i>
                         </a>
 
+                        <!-- Delete button -->
                         <button class="delete-btn-inline" data-bs-toggle="modal" data-bs-target="#deleteModal">
-                        <i class="fa-solid fa-trash"></i>
+                            <i class="fa-solid fa-trash"></i>
                         </button>
                     </div>
                 }
@@ -41,11 +46,13 @@
             </div>
             <div class="title-subrow">
 
+                <!-- Creation date -->
                 <span class="recipe-date">
                     <i class="fa-regular fa-calendar"></i>
                     @Model.CreatedAt.ToString("dd MMM yyyy")
                 </span>
 
+                <!-- Like button -->
                 <button id="likeBtn" class="recipe-like-btn @(userLiked ? "liked" : "")">
                     <i id="heartIcon" class="@(userLiked ? "fa-solid fa-heart" : "fa-regular fa-heart")"></i>
                     <span>Like</span>
@@ -105,6 +112,7 @@
 
                 @if (isCommentOwner || isCommentAdmin)
                 {
+                    <!-- Delete comment form -->
                     <form method="post"
                           asp-controller="Comment"
                           asp-action="Delete"
@@ -117,6 +125,7 @@
                     </form>
                 }
 
+                <!-- Comment header -->
                 <div class="comment-header">
                     <img src="https://ui-avatars.com/api/?name=@comment.User.UserName&background=EB9788&color=ffffff&size=64"
                          class="comment-avatar" />
@@ -125,6 +134,7 @@
                     <span class="comment-date">@comment.CreatedAt.ToShortDateString()</span>
                 </div>
 
+                <!-- Comment text -->
                 <p class="comment-text">@comment.Content</p>
             </div>
         }
@@ -176,6 +186,8 @@
 </div>
 
 <div class="modal fade" id="deleteModal" tabindex="-1">
+    
+    <!-- Standard Bootstrap modal for confirming deletion -->
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content" style="border-radius: 14px;">
 
@@ -190,7 +202,7 @@
 
             <div class="modal-footer">
                 <form method="post" asp-action="Delete">
-                    <input type="hidden" name="id" value="@Model.Id" />
+                    <input type="hidden" name="id" value="@Model.Id"/>
                     <button type="submit" class="btn btn-danger">Yes, delete</button>
                 </form>
 
@@ -220,8 +232,10 @@
         .then(data => {
             if (!data) return;
 
+            //Update like count
             document.getElementById("likeCount").textContent = data.likes;
 
+            //Update heart icon
             const heart = document.getElementById("heartIcon");
 
             if (data.liked) {

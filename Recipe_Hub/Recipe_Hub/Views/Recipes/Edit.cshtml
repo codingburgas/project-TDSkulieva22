@@ -1,11 +1,12 @@
 ﻿@model Recipe_Hub.Models.ViewModels.CreateRecipeViewModel
 @{
-    Layout = "_Layout";
+    Layout = "_Layout";  //Use the main site layout
 }
 
 <div class="recipe-form-container">
     <h2 class="form-title">Edit Recipe</h2>
 
+    <!-- Edit form: -->
     <form asp-action="Edit" method="post" enctype="multipart/form-data">
         <div class="row gx-4 gy-4 first-row">
             <div class="col-lg-4">
@@ -17,6 +18,7 @@
 
                     <div class="card-body">
 
+                        <!-- Title + Cooking Time -->
                         <div class="form-row-2">
                             <div class="form-group">
                                 <label asp-for="Title"></label>
@@ -29,6 +31,7 @@
                             </div>
                         </div>
 
+                        <!-- Category + Difficulty -->
                         <div class="form-row-2">
                             <div class="form-group">
                                 <label asp-for="CategoryId"></label>
@@ -45,6 +48,7 @@
                             </div>
                         </div>
 
+                        <!-- Description -->
                         <div class="form-group mt-3">
                             <label asp-for="Description"></label>
                             <textarea asp-for="Description" class="form-control" rows="3"></textarea>
@@ -62,17 +66,25 @@
 
                     <div class="card-body">
 
+                        <!-- Existing ingredient rows -->
                         <div id="ingredients-container">
                             @for (int i = 0; i < Model.IngredientIds.Count; i++)
                             {
                                 <div class="ingredient-row d-flex flex-wrap gap-2 mb-2">
+                                    
+                                    <!-- Ingredient dropdown -->
                                     <select asp-for="IngredientIds[i]" class="form-select flex-grow-1" asp-items="Model.Ingredients"></select>
+                                    
+                                    <!-- Quantity input -->
                                     <input asp-for="Quantities[i]" class="form-control flex-grow-1" placeholder="Quantity" />
+                                    
+                                    <!-- Remove ingredient -->
                                     <button type="button" class="remove-ingredient">✖</button>
                                 </div>
                             }
                         </div>
 
+                        <!-- Add new ingredient -->
                         <button type="button" id="add-ingredient" class="btn add-ingredient-btn">+ Add Ingredient</button>
 
                     </div>
@@ -87,6 +99,7 @@
 
                     <div class="card-body">
 
+                        <!-- Existing steps -->
                         <div id="steps-container">
                             @for (int i = 0; i < Model.Steps.Count; i++)
                             {
@@ -97,6 +110,7 @@
                             }
                         </div>
 
+                        <!-- Add new step -->
                         <button type="button" id="add-step" class="btn add-step-btn">+ Add Step</button>
 
                     </div>
@@ -104,6 +118,7 @@
             </div>
 
         </div>
+        
         <div class="row gx-4 gy-4 second-row mt-2">
 
             <div class="col-lg-12">
@@ -115,11 +130,13 @@
 
                     <div class="card-body">
 
+                        <!-- Optional replacement of main image -->
                         <div class="form-group mb-3">
                             <label>Replace Main Image (optional)</label>
                             <input type="file" asp-for="MainImage" class="form-control" />
                         </div>
 
+                        <!-- Optional addition of new gallery images -->
                         <div class="form-group mb-3">
                             <label>Add More Gallery Images (optional)</label>
                             <input type="file" asp-for="GalleryImages" class="form-control" multiple />
@@ -140,6 +157,7 @@
 
 @section Scripts {
     <script>
+        //Add new ingredient row
         document.getElementById("add-ingredient").addEventListener("click", function () {
             const container = document.getElementById("ingredients-container");
             const index = container.children.length;
@@ -147,6 +165,7 @@
             const row = document.createElement("div");
             row.className = "ingredient-row d-flex flex-wrap gap-2 mb-2";
 
+            //Copy options from the first ingredient dropdown
             row.innerHTML = `
                 <select name="IngredientIds[${index}]" class="form-select flex-grow-1">
                     ${document.querySelector("select[name='IngredientIds[0]']").innerHTML}
@@ -158,11 +177,14 @@
             container.appendChild(row);
         });
 
+        //Remove ingredient row
         document.addEventListener("click", function (e) {
             if (e.target.classList.contains("remove-ingredient")) {
                 e.target.closest(".ingredient-row").remove();
             }
         });
+
+        //Add new step row
         document.getElementById("add-step").addEventListener("click", function () {
             const container = document.getElementById("steps-container");
             const index = container.children.length;
@@ -178,6 +200,7 @@
             container.appendChild(row);
         });
 
+        //Remove step row
         document.addEventListener("click", function (e) {
             if (e.target.classList.contains("remove-step")) {
                 e.target.closest(".step-row").remove();

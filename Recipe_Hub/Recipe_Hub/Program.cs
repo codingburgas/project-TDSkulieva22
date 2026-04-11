@@ -6,12 +6,14 @@ using Recipe_Hub.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Get connection string and configure EF Core
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
                        throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
+// Configure Identity (users + roles)
 builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
@@ -27,6 +29,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IRecipeService, RecipeService>();
 
+//Razor Pages
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
@@ -54,12 +57,13 @@ app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
+//Default route
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
 
-
+//Seed admin user + role
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
@@ -69,6 +73,7 @@ using (var scope = app.Services.CreateScope())
     string adminEmail = "admin@a";
     string adminPassword = "Admin123@";
 
+    //Create admin user if missing
     var user = await userManager.FindByEmailAsync(adminEmail);
     
     if (user == null)
@@ -87,6 +92,7 @@ using (var scope = app.Services.CreateScope())
         await roleManager.CreateAsync(new IdentityRole("Admin"));
     }
     
+    //Assign user to Admin role
     if (!await userManager.IsInRoleAsync(user, "Admin"))
     {
         await userManager.AddToRoleAsync(user, "Admin");

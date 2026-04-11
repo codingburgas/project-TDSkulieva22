@@ -21,6 +21,7 @@ namespace Recipe_Hub.Models.ViewModels;
         public IFormFile MainImage { get; set; }
         public List<IFormFile> GalleryImages { get; set; } = new();
         
+        // Dropdown lists
         [ValidateNever]
         public IEnumerable<SelectListItem> Categories { get; set; }
         [ValidateNever]
