@@ -124,13 +124,20 @@ body {
     font-weight: 600;
 }
 
-.profile-img {
+.profile-initial {
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    object-fit: cover;
+    background: #EB9788;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 1.2rem;
     margin-right: 8px;
     border: 2px solid #B7472A;
+    text-transform: uppercase;
 }
 
 .profile-name {

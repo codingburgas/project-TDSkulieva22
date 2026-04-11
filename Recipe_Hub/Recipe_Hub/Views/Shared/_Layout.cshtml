@@ -68,11 +68,16 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <div class="dropdown">
-                        <a class="d-flex align-items-center profile-btn" href="#" data-bs-toggle="dropdown">
-                            <img src="~/Resources/Images/default-user.png" class="profile-img" alt="User">
-                            <span class="profile-name">@User.Identity.Name</span>
-                        </a>
+                        @{
+                            var username = User.Identity.Name;
+                            var initial = !string.IsNullOrEmpty(username) ? username[0].ToString().ToUpper() : "?";
+                        }
 
+                        <a class="d-flex align-items-center profile-btn" href="#" data-bs-toggle="dropdown">
+                            <div class="profile-initial">@initial</div>
+                            <span class="profile-name">@username</span>
+                        </a>
+                        
                         <ul class="dropdown-menu dropdown-menu-end">
                             <li>
                                 <form asp-area="Identity"

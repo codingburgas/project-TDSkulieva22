@@ -9,7 +9,7 @@ namespace Recipe_Hub.Controllers;
 public class CommentController : Controller
 {
     private readonly ApplicationDbContext _context;
-    private readonly UserManager<IdentityUser> _userManager;
+    private readonly UserManager<IdentityUser> _userManager;  //Handles user information
     
     public CommentController(ApplicationDbContext context,  UserManager<IdentityUser> userManager)
     {
@@ -17,17 +17,19 @@ public class CommentController : Controller
         _userManager = userManager;
     }
     
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     [HttpPost]
     public async Task<IActionResult> AddComment(int recipeId, string text)
     {
-        if (string.IsNullOrWhiteSpace(text))
+        //Prevent empty comments
+        if (string.IsNullOrWhiteSpace(text))  
         {
             return RedirectToAction("Details", new { id = recipeId });
         }
 
         var userId = _userManager.GetUserId(User);
 
+        //If user is not logged in
         if (userId == null)
         {
             return Unauthorized();
@@ -41,9 +43,11 @@ public class CommentController : Controller
             CreatedAt = DateTime.UtcNow
         };
 
+        //Add to database
         _context.Comments.Add(comment);
         await _context.SaveChangesAsync();
 
+        //Reload recipe page
         return RedirectToAction("Details", new { id = recipeId });
     }
 
@@ -51,16 +55,19 @@ public class CommentController : Controller
     [HttpPost]
     public async Task<IActionResult> Delete(int id)
     {
+        //Find comment by ID
         var comment = await _context.Comments.FindAsync(id);
 
         if (comment == null)
             return NotFound();
 
+        //Save recipe ID for redirect
         int recipeId = comment.RecipeId;
 
         _context.Comments.Remove(comment);
         await _context.SaveChangesAsync();
 
+        //Back to recipe page
         return RedirectToAction("Details", "Recipes", new { id = recipeId });
     }
 }

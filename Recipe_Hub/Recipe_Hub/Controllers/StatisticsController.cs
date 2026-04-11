@@ -6,11 +6,12 @@ namespace Recipe_Hub.Controllers;
 
 public class StatisticsController : Controller
 {
+    //Retrieving statistics data
     private readonly IRecipeService _recipeService;
 
     public StatisticsController(IRecipeService recipeService)
     {
-        _recipeService = recipeService;
+        _recipeService = recipeService;  //Store service instance
     }
 
     public async Task<IActionResult> Index()
@@ -19,6 +20,7 @@ public class StatisticsController : Controller
         var activeUsers = await _recipeService.GetMostActiveUsersAsync();
         var categoryStats = await _recipeService.GetCategoryPopularityAsync();
 
+        //Prepare view model with all statistics
         var vm = new StatisticsViewModel
         {
             TopRecipes = topRecipes,
@@ -26,6 +28,6 @@ public class StatisticsController : Controller
             CategoryPopularity = categoryStats
         };
 
-        return View(vm);
+        return View(vm); //Render statistics page
     }
 }

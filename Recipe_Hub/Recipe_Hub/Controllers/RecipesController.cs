@@ -16,7 +16,7 @@ public class RecipesController : Controller
 {
     private readonly ApplicationDbContext _context;
     private readonly UserManager<IdentityUser> _userManager;
-    private readonly IWebHostEnvironment _env; 
+    private readonly IWebHostEnvironment _env; //Access to wwwroot for file uploads
     public RecipesController(ApplicationDbContext context,
         UserManager<IdentityUser> userManager, IWebHostEnvironment env)
     {
@@ -27,16 +27,18 @@ public class RecipesController : Controller
 
     public async Task<IActionResult> Index(string category, string time, string difficulty, string search, string sort)
     {
-        ViewData["BodyClass"] = "recipes-page";
+        ViewData["BodyClass"] = "recipes-page";  //Add CSS class for layout
         
-        ViewBag.Categories = _context.Categories.ToList();
+        ViewBag.Categories = _context.Categories.ToList();  //Load categories for filters
+
         
         var recipes = _context.Recipes
             .Include(r => r.User)
             .Include(r => r.Likes)
             .Include(r => r.Category)
-            .AsQueryable();
+            .AsQueryable(); //Base query with relations
 
+        //Base query with relations
         if (!string.IsNullOrEmpty(category))
         {
             if (int.TryParse(category, out int catId))
@@ -45,6 +47,7 @@ public class RecipesController : Controller
             }
         }
 
+        //Filter by cooking time
         if (!string.IsNullOrEmpty(time))
         {
             if (int.TryParse(time, out int t))
@@ -53,6 +56,7 @@ public class RecipesController : Controller
             }
         }
 
+        //Filter by difficulty
         if (!string.IsNullOrEmpty(difficulty))
         {
             if (Enum.TryParse<DifficultyLevel>(difficulty, out var diffEnum))
@@ -61,6 +65,7 @@ public class RecipesController : Controller
             }
         }
 
+        //Search by title
         if (!string.IsNullOrEmpty(search))
         {
             var terms = search.ToLower().Split(' ', StringSplitOptions.RemoveEmptyEntries);
@@ -70,6 +75,7 @@ public class RecipesController : Controller
             );
         }
 
+        //Sorting options
         if (!string.IsNullOrEmpty(sort))
         {
             switch (sort)
@@ -84,11 +90,13 @@ public class RecipesController : Controller
             }
         }
 
+        //Return filtered list
         return View(await recipes.ToListAsync());
     }
 
     public async Task<IActionResult> Details(int id)
     {
+        //Load full recipe with relations
         var recipe = await _context.Recipes
             .Include(r => r.User)
             .Include(r => r.Category)
@@ -104,6 +112,7 @@ public class RecipesController : Controller
             return NotFound();
         }
 
+        //Show recipe details
         return View(recipe);
     }
     
@@ -112,6 +121,7 @@ public class RecipesController : Controller
     {
         var vm = new CreateRecipeViewModel
         {
+            //Load categories for dropdown
             Categories = _context.Categories
                 .Select(c => new SelectListItem
                 {
@@ -120,6 +130,7 @@ public class RecipesController : Controller
                 })
                 .ToList(),
 
+            //Load ingredients for selection
             Ingredients = _context.Ingredients
                 .Select(i => new SelectListItem
                 {
@@ -136,6 +147,7 @@ public class RecipesController : Controller
     [HttpPost]
     public async Task<IActionResult> Create(CreateRecipeViewModel model)
     {
+        //If validation fails, reload dropdowns
         if (!ModelState.IsValid)
         {
             model.Categories = _context.Categories
@@ -149,6 +161,7 @@ public class RecipesController : Controller
             return View(model);
         }
 
+        //Create recipe object
         var recipe = new Recipe
         {
             Title = model.Title,
@@ -187,7 +200,7 @@ public class RecipesController : Controller
         }
             
         
-        //Gallery
+        //Gallery image max 5
         if (model.GalleryImages != null && model.GalleryImages.Count > 0)
         {
             int count = 0;
@@ -216,6 +229,7 @@ public class RecipesController : Controller
             }
         }
         
+        //Add ingredients
         for (int i = 0; i < model.IngredientIds.Count; i++)
         {
             if (model.IngredientIds[i] == 0) continue;
@@ -227,6 +241,7 @@ public class RecipesController : Controller
             });
         }
 
+        //Add steps
         for (int i = 0; i < model.Steps.Count; i++)
         {
             recipe.Steps.Add(new RecipeStep
@@ -247,7 +262,7 @@ public class RecipesController : Controller
         var recipe = await _context.Recipes
             .Include(r => r.RecipeIngredients)
             .Include(r => r.Steps)
-            .FirstOrDefaultAsync(r => r.Id == id);
+            .FirstOrDefaultAsync(r => r.Id == id); //Load recipe for editing
 
         if (recipe == null)
             return NotFound();
@@ -266,6 +281,7 @@ public class RecipesController : Controller
             Quantities = recipe.RecipeIngredients.Select(ri => ri.Quantity).ToList(),
             Steps = recipe.Steps.OrderBy(s => s.StepNumber).Select(s => s.Description).ToList(),
 
+            //Dropdowns
             Categories = _context.Categories
                 .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
                 .ToList(),
@@ -282,7 +298,7 @@ public class RecipesController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(int id, CreateRecipeViewModel model)
     {
-        
+        //Load recipe with ingredients and steps
         var recipe = await _context.Recipes
             .Include(r => r.RecipeIngredients)
             .Include(r => r.Steps)
@@ -294,6 +310,7 @@ public class RecipesController : Controller
         if (recipe.UserId != _userManager.GetUserId(User))
             return Forbid();
 
+        //Reload dropdown lists if validation fails
         if (!ModelState.IsValid)
         {
             model.Categories = _context.Categories
@@ -307,6 +324,7 @@ public class RecipesController : Controller
             return View(model);
         }
         
+        //Update main image if a new one is uploaded
         if (model.MainImage != null)
         {
             var fileName = Guid.NewGuid() + Path.GetExtension(model.MainImage.FileName);
@@ -322,12 +340,14 @@ public class RecipesController : Controller
             recipe.MainImagePath = "/Resources/Images/" + fileName;
         }
 
+        //Update basic recipe fields
         recipe.Title = model.Title;
         recipe.Description = model.Description;
         recipe.CookingTime = model.CookingTime;
         recipe.Difficulty = model.Difficulty;
         recipe.CategoryId = model.CategoryId;
 
+        //Replace old ingredients with new ones
         _context.RecipeIngredients.RemoveRange(recipe.RecipeIngredients);
         recipe.RecipeIngredients = new List<RecipeIngredient>();
         
@@ -341,7 +361,8 @@ public class RecipesController : Controller
                 Quantity = model.Quantities[i]
             });
         }
-
+        
+        //Replace old steps with new ones
         recipe.Steps.Clear();
         for (int i = 0; i < model.Steps.Count; i++)
         {
@@ -361,6 +382,7 @@ public class RecipesController : Controller
     [HttpPost]
     public IActionResult Like(int id)
     {
+        //Get logged-in user ID
         var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
         if (userId == null)
             return Unauthorized();
@@ -376,6 +398,7 @@ public class RecipesController : Controller
 
         bool liked;
 
+        //Toggle like/unlike
         if (existingLike == null)
         {
             recipe.Likes.Add(new Like
@@ -393,12 +416,14 @@ public class RecipesController : Controller
 
         _context.SaveChanges();
 
+        //Return updated like count
         return Json(new { likes = recipe.Likes.Count, liked });
     }
     
     [HttpPost]
     public IActionResult Delete(int id)
     {
+        //Load recipe with all related data
         var recipe = _context.Recipes
             .Include(r => r.Likes)
             .Include(r => r.Comments)
@@ -410,6 +435,7 @@ public class RecipesController : Controller
         if (recipe == null)
             return NotFound();
 
+        //Remove related entities first
         _context.Likes.RemoveRange(recipe.Likes);
         _context.Comments.RemoveRange(recipe.Comments);
         _context.RecipeIngredients.RemoveRange(recipe.RecipeIngredients);
@@ -419,7 +445,7 @@ public class RecipesController : Controller
 
         _context.SaveChanges();
 
-        return RedirectToAction("Index");
+        return RedirectToAction("Index"); //Back to list
     }
 }
 

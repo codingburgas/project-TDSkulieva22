@@ -15,6 +15,7 @@ public class HomeController : Controller
         _logger = logger;
     }
     
+    //Load the home page
     public IActionResult Index()
     {
         return View();
@@ -28,6 +29,7 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
+        //Return error view with request ID for debugging
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
     

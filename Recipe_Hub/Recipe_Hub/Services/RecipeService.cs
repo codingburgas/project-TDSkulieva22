@@ -14,6 +14,7 @@ public class RecipeService : IRecipeService
             _context = context;
         }
 
+        //Get all recipes
         public async Task<IEnumerable<Recipe>> GetAllAsync()
         {
             return await _context.Recipes
@@ -24,6 +25,7 @@ public class RecipeService : IRecipeService
                 .ToListAsync();
         }
 
+        //Get a single recipe by ID with full details
         public async Task<Recipe?> GetByIdAsync(int id)
         {
             return await _context.Recipes
@@ -47,6 +49,7 @@ public class RecipeService : IRecipeService
             await _context.SaveChangesAsync();
         }
 
+        //Delete recipe by ID if it exists
         public async Task DeleteAsync(int id)
         {
             var recipe = await _context.Recipes.FindAsync(id);
@@ -57,6 +60,7 @@ public class RecipeService : IRecipeService
             }
         }
 
+        // Filters
         public async Task<IEnumerable<Recipe>> FilterByCategoryAsync(int categoryId)
         {
             return await _context.Recipes
@@ -89,6 +93,7 @@ public class RecipeService : IRecipeService
                 .ToListAsync();
         }
 
+        //Load all recipes with user data
         public async Task<IEnumerable<ActiveUserViewModel>> GetMostActiveUsersAsync()
         {
             var recipes = await _context.Recipes
@@ -97,6 +102,7 @@ public class RecipeService : IRecipeService
                 .Include(r => r.Comments)
                 .ToListAsync();
 
+            //Group recipes by user and calculate activity stats
             var users = recipes
                 .GroupBy(r => new { r.UserId, r.User.UserName })
                 .Select(g =>
@@ -130,6 +136,7 @@ public class RecipeService : IRecipeService
         
         public async Task<Dictionary<string, int>> GetCategoryPopularityAsync()
         {
+            //Count how many recipes belong to each category
             return await _context.Recipes
                 .GroupBy(r => r.Category.Name)
                 .Select(g => new { Category = g.Key, Count = g.Count() })

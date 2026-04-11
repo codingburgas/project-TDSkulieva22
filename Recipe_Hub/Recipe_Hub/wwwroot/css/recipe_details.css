@@ -4,7 +4,6 @@
     padding: 30px 20px;
     font-family: "Segoe UI", sans-serif;
 }
-
 .recipe-main-box {
     display: flex;
     gap: 25px;
@@ -504,7 +503,8 @@
     gap: 10px;
 }
 
-.edit-btn-inline,
+.edit-btn-inli
+ne,
 .delete-btn-inline,
 .comment-delete-btn{
     width: 38px;
@@ -516,6 +516,7 @@
     text-decoration: none;
     font-size: 18px;
     transition: 0.25s ease;
+    
 }
 
 /* EDIT BUTTON */
@@ -532,11 +533,15 @@
 }
 
 /* DELETE BUTTON */
-.delete-btn-inline,
-.comment-delete-btn{
+.delete-btn-inline{
     background: linear-gradient(180deg, #ffb3b3 0%, #ff6b6b 100%);
     color: #4a1f16;
     border: 2px solid #e68a8a;
+}
+
+.comment-delete-btn{
+    background: transparent;
+    color: #4a1f16;
 }
 
 .delete-btn-inline:hover,
