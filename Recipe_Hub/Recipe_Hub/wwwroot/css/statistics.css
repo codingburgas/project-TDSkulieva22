@@ -1,4 +1,5 @@
-﻿.recipes-container {
+﻿/* Recipe grid container */
+.recipes-container {
     max-width: 1350px;
     margin: 0 auto;
     background: linear-gradient(
@@ -19,6 +20,7 @@
     gap: 22px;
 }
 
+/* Recipe card */
 .recipe-card {
     background: #fafafa;
     border-radius: 16px;
@@ -60,6 +62,7 @@
     color: #999;
 }
 
+/* Meta row - difficulty, time, likes */
 .recipe-meta {
     display: flex;
     justify-content: space-between;
@@ -71,6 +74,7 @@
     font-weight: 600;
 }
 
+/* Section headings */
 .section-heading {
     font-size: 33px;
     font-weight: 700;
@@ -83,6 +87,7 @@
     opacity: 0;
 }
 
+/* User section */
 .users-container {
     max-width: 1350px;
     margin: 60px auto;
@@ -159,6 +164,7 @@
     white-space: nowrap;
 }
 
+/* Category statistics section */
 .category-container {
     max-width: 1350px;
     margin: 60px auto;
@@ -209,6 +215,7 @@
     padding-left: 30px;
 }
 
+/* Background bar */
 .cat-bar {
     width: 100%;
     height: 14px;
@@ -233,6 +240,8 @@
     color: #333;
     text-align: right;
 }
+
+/* Statistics */
 .stats-title-wrapper {
     display: flex;
     align-items: center;
@@ -262,6 +271,7 @@
     font-size: 2.4rem;
 }
 
+/* Animations */
 @keyframes fadeDown {
     to {
         opacity: 1;

@@ -4,6 +4,7 @@
     color: #333;
 }
 
+/* Page title styling for Create/Edit Recipe pages */
 .form-title {
     text-align: center;
     font-family: 'Playfair Display', serif;
@@ -15,17 +16,20 @@
     animation: fadeSlideDown 0.9s ease-out;
 }
 
+/* Title animation */
 @keyframes fadeSlideDown {
     0% { opacity: 0; transform: translateY(-25px); }
     100% { opacity: 1; transform: translateY(0); }
 }
 
+/* Main container for the recipe form */
 .recipe-form-container {
     max-width: 1150px;
     margin: 10px auto;
     padding: 5px;
 }
 
+/*  Card styling */
 .card {
     border-radius: 14px;
     box-shadow: 0 8px 22px rgba(0,0,0,0.25);
@@ -49,6 +53,7 @@
     min-height: 340px;
 }
 
+/* Section backgrounds */
 .section-basic {
     background: linear-gradient(180deg, #FFF2E5 0%, #FFD5AB 100%);
 }
@@ -67,10 +72,12 @@
     padding: 15px;
 }
 
+/* Fix Bootstrap row behavior */
 .row > div {
     display: block;
 }
 
+/* Card headers */
 .section-basic .card-header { background-color: #EB9788; color: #FFF2E5; }
 .section-ingredients .card-header { background-color: #B7472A; color: #FFD5AB; }
 .section-steps .card-header { background-color: #EB9788; color: #FFF2E5; }
@@ -91,6 +98,7 @@
     font-size: 1.7rem;
 }
 
+/* Form elements */
 .section-basic .card-body{
     padding: 14px 18px;
 }
@@ -127,6 +135,7 @@
     max-width: calc(50% - 20px);
 }
 
+/* Ingredients + steps blocks */
 .ingredient-row, .step-row {
     background: #FFF2E5;
     padding: 10px;
@@ -168,6 +177,7 @@
     background: none;
 }
 
+/* Submit button */
 .btn-create {
     background: linear-gradient(30deg, #FFD5AB, #B7472A);
     color: #4a1f16;
@@ -182,6 +192,7 @@
     margin-bottom: 20px;
 }
 
+/* Floating animation */
 @keyframes floatPulse {
     0% { transform: translateY(0); }
     50% { transform: translateY(-4px); }
@@ -224,6 +235,7 @@
     background: transparent !important;
 }
 
+/* Add buttons */
 .add-ingredient-btn {
     border: 2px dotted #EB9788;
     color: #EB9788;
@@ -254,6 +266,7 @@
     color: white;
 }
 
+/* Responsive design */
 @media (max-width: 992px) {
     .form-row-2 .form-group {
         flex: 1 1 100%;

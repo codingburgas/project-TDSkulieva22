@@ -1,3 +1,4 @@
+/* Auth page wrapper */
 .auth-wrapper {
     min-height: 100vh;
     display: flex;
@@ -21,6 +22,7 @@
     display: block;
 }
 
+/* Auth card */
 .auth-card {
     position: absolute;
     bottom: 90px;
@@ -43,11 +45,13 @@
     animation: fadeIn 0.8s forwards;
 }
 
+/* Fade + slide animation for the title */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-15px); }
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Input field with icons */
 .input-icon {
     position: relative;
     margin-bottom: 18px;
@@ -75,10 +79,12 @@
     outline: none;
 }
 
+/* Change background when user has typed something */
 .input-icon input:not(:placeholder-shown) {
     background-color: #FFE7D1;
 }
 
+/* buttons */
 .btn-primary {
     background-color: #B7472A !important;
     border: none !important;
@@ -92,6 +98,7 @@
     background-color: #9e3d25 !important;
 }
 
+/* Link to switch */
 .auth-card .new_account {
     display: inline-block;
     margin-top: 12px;
@@ -109,7 +116,10 @@
     transform: translateX(4px);
     text-decoration: underline !important;
 }
-    
+
+/* Responsive design */
+
+/* Large screens */
 @media (min-width: 993px) {
 
     .auth-card {
@@ -125,6 +135,7 @@
     }
 }
 
+/* Tablets and small laptops */
 @media (max-width: 992px) {
 
     .auth-image-box {
@@ -140,6 +151,7 @@
     }
 }
 
+/* Medium screens */
 @media (max-width: 768px) {
 
     .auth-image-box {
@@ -155,6 +167,7 @@
     }
 }
 
+/* Mobile phones */
 @media (max-width: 576px) {
 
     .auth-wrapper {

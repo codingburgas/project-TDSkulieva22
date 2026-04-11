@@ -1,4 +1,7 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
+﻿/* Font imports */
+
+/* Quicksand for body text, Playfair Display for headings */
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap');
 
 .home-page header,
@@ -8,6 +11,7 @@
     padding: 0;
 }
 
+/* Video hero section */
 .video-hero {
     width: 100%;
     height: 100vh;
@@ -40,6 +44,7 @@
     object-fit: cover;
 }
 
+/* Main background */
 .home-page main{
     background: linear-gradient(
             to bottom,
@@ -50,6 +55,7 @@
     );
 }
 
+/* CTA Section */
 .cta-section {
     background-color: rgba(235, 151, 136, 0.35);
     backdrop-filter: blur(4px);
@@ -67,11 +73,13 @@ h2.fw-bold {
     transition: all 0.7s ease-out;
 }
 
+/* Triggered when visible on screen */
 h2.fw-bold.animate {
     opacity: 1;
     transform: translateY(0);
 }
 
+/* Staggered animation delays */
 h2.fw-bold:nth-of-type(1).animate {
     transition-delay: 0.1s;
     animation-delay: 0.1s;
@@ -87,6 +95,7 @@ h2.fw-bold:nth-of-type(3).animate {
     animation-delay: 0.7s;
 }
 
+/* Quote cards */
 .quote-card {
     background: linear-gradient(145deg, #f5efe7, #ffffff);
     border-radius: 20px;
@@ -161,6 +170,7 @@ body {
     font-family: 'Quicksand', sans-serif;
 }
 
+/* Cooking tips images */
 .tip-img {
     width: 100%;
     max-width: 380px;
@@ -174,6 +184,7 @@ body {
     transform: scale(1.08);
 }
 
+/* CTA Button */
 .cta-btn {
     background-color: #EB9788;
     color: white;

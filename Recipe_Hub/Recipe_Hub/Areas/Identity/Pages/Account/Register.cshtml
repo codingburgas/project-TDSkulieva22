@@ -1,7 +1,7 @@
 ﻿@page
 @model RegisterModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Register";  //Page title for the browser tab
 }
 <link rel="stylesheet" href="~/css/auth.css" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
@@ -9,9 +9,13 @@
 <div class="auth-wrapper">
 
     <div class="auth-image-box">
+        
+        <!-- Decorative image on the left side -->
         <img src="/Resources/Images/auth-food.png" alt="Food">
 
         <div class="auth-card">
+            
+            <!-- Title + subtitle -->
             <h1 class="auth-title">Join Us</h1>
             <p class="auth-subtitle">Create an account to start sharing your recipes.</p>
 
@@ -20,19 +24,19 @@
 
                 <div class="input-icon">
                     <i class="fa-solid fa-envelope"></i>
-                    <input asp-for="Input.Email" class="form-control" placeholder="Email" />
+                    <input asp-for="Input.Email" class="form-control" placeholder="Email"/>
                     <span asp-validation-for="Input.Email" class="text-danger"></span>
                 </div>
 
                 <div class="input-icon">
                     <i class="fa-solid fa-lock"></i>
-                    <input asp-for="Input.Password" class="form-control" placeholder="Password" />
+                    <input asp-for="Input.Password" class="form-control" placeholder="Password"/>
                     <span asp-validation-for="Input.Password" class="text-danger"></span>
                 </div>
 
                 <div class="input-icon">
                     <i class="fa-solid fa-lock-open"></i>
-                    <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password" />
+                    <input asp-for="Input.ConfirmPassword" class="form-control" placeholder="Confirm Password"/>
                     <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
                 </div>
 

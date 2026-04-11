@@ -4,6 +4,8 @@
     padding: 30px 20px;
     font-family: "Segoe UI", sans-serif;
 }
+
+/* Main recipe box */
 .recipe-main-box {
     display: flex;
     gap: 25px;
@@ -111,7 +113,7 @@
     line-height: 1.6;
     color: #555;
 }
-
+ /* Second row */
 .second-row-wrapper {
     display: flex;
     gap: 25px;
@@ -172,6 +174,7 @@
     color: #B7472A;
 }
 
+/* Steps list */
 .steps-list {
     list-style: none;
     margin: 0;
@@ -205,6 +208,7 @@
     font-size: 17px;
 }
 
+/* Second decoration */
 .ingredients-box::before,
 .steps-box::before,
 .comments-box::before {
@@ -219,10 +223,12 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.25);
 }
 
+/* Different pin colors per section */
 .ingredients-box::before { background: #B7472A; border: 2px solid #8f2f1a; }
 .steps-box::before       { background: #FFD5AB; border: 2px solid #e6b88c; }
 .comments-box::before    { background: #EB9788; border: 2px solid #d86f5f; }
 
+/* Pin shadow line */
 .ingredients-box::after,
 .steps-box::after,
 .comments-box::after {
@@ -237,6 +243,7 @@
     border-radius: 2px;
 }
 
+/* Comments */
 .comments-box .comment-item {
     background: #f7f7f7;
     border-radius: 12px;
@@ -282,6 +289,7 @@
     color: #444;
 }
 
+/* Gallery section */
 .gallery-box {
     margin-top: 30px;
     padding: 22px;
@@ -307,6 +315,7 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.25);
 }
 
+/* Pin shadow line */
 .gallery-box::after {
     content: "";
     position: absolute;
@@ -360,6 +369,7 @@
     transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+/* Hover effect */
 .gallery-img:hover {
     transform: scale(1.05);
     box-shadow: 0 6px 16px rgba(0,0,0,0.25);
@@ -390,6 +400,7 @@
     box-shadow: 0 3px 6px rgba(0,0,0,0.25);
 }
 
+/* Pin shadow line */
 .add-comment-box::after {
     content: "";
     position: absolute;
@@ -455,6 +466,7 @@
     background: #8f2f1a;
 }
 
+/* Back button */
 .back-btn-wrapper {
     width: 100%;
     display: flex;
@@ -490,6 +502,7 @@
     color: #4a1f16;
 }
 
+/* Action button */
 .title-with-actions {
     display: flex;
     justify-content: space-between;
@@ -503,8 +516,8 @@
     gap: 10px;
 }
 
-.edit-btn-inli
-ne,
+/* Shared styling for round icon buttons */
+.edit-btn-inline,
 .delete-btn-inline,
 .comment-delete-btn{
     width: 38px;
@@ -519,7 +532,7 @@ ne,
     
 }
 
-/* EDIT BUTTON */
+/* Edit button */
 .edit-btn-inline {
     background: linear-gradient(180deg, #FFF2E5 0%, #FFD5AB 100%);
     color: #5a2a1e;
@@ -532,7 +545,7 @@ ne,
     color: #ffffff;
 }
 
-/* DELETE BUTTON */
+/* Delete button */
 .delete-btn-inline{
     background: linear-gradient(180deg, #ffb3b3 0%, #ff6b6b 100%);
     color: #4a1f16;
@@ -551,11 +564,13 @@ ne,
     transform: translateY(-2px);
 }
 
+/* Simple fade‑in animation */
 @keyframes fadeIn {
     from { opacity: 0; }
     to   { opacity: 1; }
 }
 
+/* Pop‑in animation with slight scale effect */
 @keyframes popIn {
     from { opacity: 0; transform: scale(0.95); }
     to   { opacity: 1; transform: scale(1); }

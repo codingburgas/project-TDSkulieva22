@@ -1,13 +1,16 @@
+/* Default font size for small screens */
 html {
   font-size: 14px;
 }
 
+/* Increase base font size on medium+ screens */
 @media (min-width: 768px) {
   html {
     font-size: 16px;
   }
 }
 
+/* Custom focus ring for buttons, inputs, and nav links */
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #B7472A;
 }
@@ -17,6 +20,7 @@ html {
   min-height: 100%;
 }
 
+/* Reserve space for footer */
 body {
   margin-bottom: 60px;
 }
@@ -34,7 +38,7 @@ body {
     color: darkred;
 }
 
-
+/* Navigation bar */
 .custom-nav {
     height: 90px;
     padding: 12px 0;
@@ -103,6 +107,7 @@ body {
     color: #B7472A;
 }
 
+/* Login button */
 .login-btn {
     background-color: #EB9788;
     color: white;
@@ -118,6 +123,7 @@ body {
     color: #FFF2E5;
 }
 
+/* Profile link */
 .profile-btn {
     text-decoration: none;
     color: #EB9788;
@@ -151,10 +157,12 @@ body {
     padding: 10px 0;
 }
 
+/* Bootstrap override */
 body {
     padding-top: 0px;
 }
 
+/* Sticky header */
 header {
     position: sticky;
     top: 0;
@@ -170,6 +178,7 @@ header {
     font-family: 'Quicksand', sans-serif;
 }
 
+/* Footer */
 .footer-container {
     display: flex;
     justify-content: space-around;
@@ -242,6 +251,7 @@ header {
     font-weight: 600;
 }
 
+/* Feedback form */
 .footer-feedback-form textarea {
     width: 100%;
     height: 80px;
