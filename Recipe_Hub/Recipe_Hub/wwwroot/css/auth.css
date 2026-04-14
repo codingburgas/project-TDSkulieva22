@@ -99,7 +99,7 @@
 }
 
 /* Link to switch */
-.auth-card .new_account {
+.auth-card .new_account .account{
     display: inline-block;
     margin-top: 12px;
     margin-left: 10px;
@@ -111,7 +111,7 @@
     transition: color 0.25s ease, transform 0.25s ease;
 }
 
-.auth-card .new_account:hover {
+.auth-card .new_account .account:hover {
     color: #9e3d25 !important;
     transform: translateX(4px);
     text-decoration: underline !important;

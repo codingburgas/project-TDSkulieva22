@@ -31,14 +31,19 @@
                             <h3 class="recipe-title">@recipe.Title</h3>
 
                             <p class="recipe-author">
-                                👤 @recipe.User.UserName
+                                <i class="fa-solid fa-user user-icon"></i>
+                                <span class="author-name">@recipe.User.UserName</span>
                                 <span class="recipe-date">@recipe.CreatedAt.ToString("dd MMM yyyy",
                                                               System.Globalization.CultureInfo.InvariantCulture)</span>
                             </p>
 
                             <div class="recipe-meta">
-                                <span class="recipe-fans">@recipe.Comments.Count fans</span>
-                                <span class="recipe-likes">❤️ @recipe.Likes.Count</span>
+                                <span class="recipe-fans">
+                                    <i class="fa-solid fa-comment meta-icon"></i> @recipe.Comments.Count
+                                </span>
+                                <span class="recipe-likes">
+                                    <i class="fa-solid fa-heart meta-icon"></i> @recipe.Likes.Count
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -75,9 +80,9 @@
 
                                 <!-- Likes, comments, top recipe -->
                                 <div class="user-stats-inline">
-                                    <span>❤️ @user.TotalLikes likes</span>
-                                    <span>💬 @user.TotalComments comments</span>
-                                    <span>⭐ @user.TopRecipeTitle (@user.TopRecipeLikes likes)</span>
+                                    <span><i class="fa-solid fa-heart"></i> @user.TotalLikes likes</span>
+                                    <span><i class="fa-solid fa-comment"></i> @user.TotalComments comments</span>
+                                    <span><i class="fa-solid fa-star"></i> @user.TopRecipeTitle (@user.TopRecipeLikes likes)</span>
                                 </div>
                             </div>
                         </div>
@@ -98,7 +103,9 @@
     <section class="stats-section">
         <div class="category-container">
 
-            <h2 class="section-heading">Category Popularity</h2>
+            <h2 class="section-heading">
+                <i class="fa-solid fa-chart-simple"></i> Category Popularity
+            </h2>
 
             <div class="category-chart">
                 @foreach (var cat in Model.CategoryPopularity)

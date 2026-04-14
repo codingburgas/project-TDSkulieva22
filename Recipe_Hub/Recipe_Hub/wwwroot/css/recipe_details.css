@@ -532,6 +532,19 @@
     
 }
 
+.comment-delete-btn{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    font-size: 14px;
+    transition: 0.25s ease;
+
+}
+
 /* Edit button */
 .edit-btn-inline {
     background: linear-gradient(180deg, #FFF2E5 0%, #FFD5AB 100%);
@@ -555,11 +568,12 @@
 .comment-delete-btn{
     background: transparent;
     color: #4a1f16;
+    border: none !important;
 }
 
 .delete-btn-inline:hover,
 .comment-delete-btn:hover{
-    background: linear-gradient(180deg, #ff6b6b 0%, #b30000 100%);
+    background: linear-gradient(180deg, #ffb3b3 0%, #ff6b6b 100%);
     color: white;
     transform: translateY(-2px);
 }
