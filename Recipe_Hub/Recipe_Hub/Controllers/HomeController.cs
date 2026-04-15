@@ -23,7 +23,7 @@ public class HomeController : Controller
     [Authorize(Roles = "Admin")]
     public IActionResult Privacy()
     {
-        return View();
+        return Index();
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

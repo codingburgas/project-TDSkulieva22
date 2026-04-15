@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using System.Security.Claims;
+using Ganss.Xss;
 
 namespace Recipe_Hub.Controllers;
 
@@ -17,12 +18,22 @@ public class RecipesController : Controller
     private readonly ApplicationDbContext _context;
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IWebHostEnvironment _env; //Access to wwwroot for file uploads
+    private readonly HtmlSanitizer _sanitizer = new HtmlSanitizer();
     public RecipesController(ApplicationDbContext context,
         UserManager<IdentityUser> userManager, IWebHostEnvironment env)
     {
         _context = context;
         _userManager = userManager;
         _env = env;
+        
+        _sanitizer.AllowedTags.Add("b");
+        _sanitizer.AllowedTags.Add("i");
+        _sanitizer.AllowedTags.Add("strong");
+        _sanitizer.AllowedTags.Add("em");
+        _sanitizer.AllowedTags.Add("ul");
+        _sanitizer.AllowedTags.Add("li");
+        _sanitizer.AllowedTags.Add("p");
+        _sanitizer.AllowedTags.Add("br");
     }
 
     public async Task<IActionResult> Index(string category, string time, string difficulty, string search, string sort)
@@ -165,7 +176,7 @@ public class RecipesController : Controller
         var recipe = new Recipe
         {
             Title = model.Title,
-            Description = model.Description,
+            Description = _sanitizer.Sanitize(model.Description),
             CookingTime = model.CookingTime,
             Difficulty = model.Difficulty,
             CategoryId = model.CategoryId,
@@ -247,7 +258,7 @@ public class RecipesController : Controller
             recipe.Steps.Add(new RecipeStep
             {
                 StepNumber = i + 1,
-                Description = model.Steps[i]
+                Description = _sanitizer.Sanitize(model.Steps[i])
             });
         }
         await _context.SaveChangesAsync();
@@ -342,7 +353,7 @@ public class RecipesController : Controller
 
         //Update basic recipe fields
         recipe.Title = model.Title;
-        recipe.Description = model.Description;
+        recipe.Description = _sanitizer.Sanitize(model.Description);
         recipe.CookingTime = model.CookingTime;
         recipe.Difficulty = model.Difficulty;
         recipe.CategoryId = model.CategoryId;
@@ -369,7 +380,7 @@ public class RecipesController : Controller
             recipe.Steps.Add(new RecipeStep
             {
                 StepNumber = i + 1,
-                Description = model.Steps[i]
+                Description = _sanitizer.Sanitize(model.Steps[i])
             });
         }
 

@@ -70,8 +70,8 @@ using (var scope = app.Services.CreateScope())
     var userManager = services.GetRequiredService<UserManager<IdentityUser>>();
     var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
 
-    string adminEmail = "admin@a";
-    string adminPassword = "Admin123@";
+    var adminEmail = builder.Configuration["AdminSettings:Email"];
+    var adminPassword = builder.Configuration["AdminSettings:Password"];
 
     //Create admin user if missing
     var user = await userManager.FindByEmailAsync(adminEmail);

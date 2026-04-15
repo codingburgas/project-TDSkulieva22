@@ -67,7 +67,7 @@
                 <span><i class="fa-solid fa-clock"></i> @Model.CookingTime мин</span>
             </div>
 
-            <p class="recipe-description">@Model.Description</p>
+            <p class="recipe-description">@Html.Raw(Model.Description)</p>
 
         </div>
 
@@ -93,7 +93,7 @@
         <ol class="steps-list">
             @foreach (var step in Model.Steps.OrderBy(s => s.StepNumber))
             {
-                <li>@step.Description</li>
+                <li>@Html.Raw(step.Description)</li>
             }
         </ol>
     </div>
@@ -135,7 +135,7 @@
                 </div>
 
                 <!-- Comment text -->
-                <p class="comment-text">@comment.Content</p>
+                <p class="comment-text">@Html.Raw(comment.Content)</p>
             </div>
         }
     </div>
@@ -165,7 +165,7 @@
             Add a Comment
         </h2>
 
-        <form asp-action="AddComment" method="post">
+        <form asp-controller="Comment" asp-action="AddComment" method="post">
             <input type="hidden" name="recipeId" value="@Model.Id" />
 
             <textarea name="text" class="comment-textarea" placeholder="Write your comment here..."></textarea>
