@@ -1,11 +1,11 @@
 [![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/U2LjJyKI)
 <p align="center">
-  <img src="./screenshots/logo.png" alt="Dishlly Logo" width="200"/>
+  <img src="./screenshots/logo.png" alt="Dishlly Logo" width="400"/>
 </p>
 
-<p align="center">
+<h1 align="center">
   <b>Social Recipe Network</b>
-</p>
+</h1>
 
 <p align="center">
   A modern web platform for sharing, discovering and interacting with recipes.
@@ -86,17 +86,9 @@
 ## 📷 Screenshots
 
 <p align="center">
-  <img src="./screenshots/home.png" width="400"/>
-  <img src="./screenshots/recipe.png" width="400"/>
+  <img src="./screenshots/home_page.png" width="500"/>
+  <img src="./screenshots/recipes_page.png" width="500"/>
 </p>
-
----
-
-## 📁 Documents
-<ul>
-    <li><a href="">Documentation</a></li>
-    <li><a href="">Presentation</a></li>
-</ul>
 
 ---
 
